@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollTopButton();   // 8. Кнопка «Scroll to Top»
   setupScrollColorShift();  // 9. Зміна фону при скролі
 });
+const emailBtn = document.getElementById('email-button');
+  if (emailBtn) {
+    emailBtn.addEventListener('click', () => {
+      window.location.href = 'mailto:artur.shmaltel.kb.2022@lpnu.ua';
+    });
+  }
 
 function storeUserInfo() {
   const userAgent = navigator.userAgent;
