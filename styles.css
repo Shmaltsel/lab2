@@ -1,4 +1,8 @@
 /* ===================== Загальні налаштування ===================== */
+html {
+  scroll-behavior: smooth; /* Плавний скрол */
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +10,7 @@ body {
   background-color: #ecf0f1;
   color: #2c3e50;
   line-height: 1.6;
+  user-select: none; /* Блокуємо виділення тексту */
 }
 
 /* ========== Фіксований Header ========== */
@@ -16,38 +21,54 @@ header {
   width: 100%;
   background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
   color: #ffffff;
-  text-align: center;
-  padding: 20px 0 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
-header .header-content {
+.header-container {
   max-width: 900px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
-header p {
-  margin: 8px 0 0;
-  font-size: 1rem;
-  opacity: 0.9;
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 24px;
 }
 
-header a {
+nav a {
   color: #ecf0f1;
-  text-decoration: underline;
-  transition: color 0.2s;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
 }
-header a:hover {
-  color: #d1e8ff;
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #ecf0f1;
+  transition: width 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 /* ========== Фіксований Footer ========== */
@@ -62,19 +83,21 @@ footer {
   padding: 12px 0;
   font-size: 0.95rem;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  user-select: none;
 }
 
 /* ========== Основний вміст ========== */
 main {
   max-width: 900px;
   margin: 0 auto;
-  padding: 140px 20px 60px; /* враховуємо висоту header (≈80px) і footer (≈40px) */
+  padding: 120px 20px 80px; /* Враховуємо висоту header та footer */
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
-/* ========== Горизонтальні лінії-роздільники ========== */
+/* ========== Роздільники ========== */
 hr {
   border: none;
   height: 2px;
@@ -82,28 +105,29 @@ hr {
   margin: 20px 0;
 }
 
-/* ========== Секції ========== */
-section {
+/* ========== Секції ===================== */
+.section {
   padding: 30px 0;
 }
 
-/* Змінний фон для кожної непарної секції */
-section:nth-of-type(odd) {
+.section:nth-of-type(odd) {
   background-color: #f7f9fb;
-  border-radius: 4px;
 }
 
-/* Заголовки секцій */
-section h2 {
+.content-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.section h2 {
   margin-bottom: 16px;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: #34495e;
   position: relative;
   padding-left: 16px;
 }
 
-/* Ліва кольорова смужка поруч із заголовком */
-section h2::before {
+.section h2::before {
   content: "";
   position: absolute;
   left: 0;
@@ -115,21 +139,21 @@ section h2::before {
 }
 
 /* ========== Списки ===================== */
-section ul {
+.section ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-section ul li {
+.section ul li {
   position: relative;
   padding-left: 28px;
   margin-bottom: 12px;
   color: #34495e;
+  transition: color 0.2s;
 }
 
-/* Кастомні маркери списку */
-section ul li::before {
+.section ul li::before {
   content: "•";
   position: absolute;
   left: 0;
@@ -140,47 +164,59 @@ section ul li::before {
   transform: translateY(2px);
 }
 
+.section ul li:hover {
+  color: #2980b9;
+}
+
 /* ========== Проєкти ===================== */
-article {
-  margin-bottom: 30px;
-  padding: 20px 24px;
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
   background-color: #ffffff;
   border-left: 6px solid #3498db;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  user-select: none;
 }
 
-article:hover {
-  transform: translateY(-4px);
+.project-card:hover {
+  transform: translateY(-6px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border-color: #2980b9;
 }
 
-article h3 {
-  margin: 0 0 10px;
+.project-card h3 {
+  margin-top: 0;
   font-size: 1.3rem;
   color: #2c3e50;
 }
 
-article p {
+.project-card p {
   margin: 8px 0;
   color: #4b6a87;
 }
 
-article ul {
+.project-card ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-article ul li {
+.project-card ul li {
   position: relative;
   padding-left: 28px;
   margin-bottom: 8px;
   color: #34495e;
+  transition: color 0.2s;
 }
 
-article ul li::before {
+.project-card ul li::before {
   content: "►";
   position: absolute;
   left: 0;
@@ -191,7 +227,30 @@ article ul li::before {
   transform: translateY(1px);
 }
 
-/* ========== Розділ “Мови” ===================== */
+.project-card ul li:hover {
+  color: #2980b9;
+}
+
+/* ========== Контакти ===================== */
+.contact-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: #2980b9;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.2s;
+  user-select: none;
+}
+
+.contact-button:hover {
+  background-color: #1f5f8b;
+  transform: translateY(-2px);
+}
+
+/* ========== Розділ "Мови" ===================== */
 .languages {
   display: flex;
   flex-wrap: wrap;
@@ -204,14 +263,14 @@ article ul li::before {
   padding: 14px 18px;
   border-radius: 4px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  user-select: none;
 }
 
 .languages li:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-color: #f0f8ff;
 }
 
 .languages li::before {
@@ -233,30 +292,54 @@ article ul li::before {
 a {
   color: #2980b9;
   text-decoration: none;
+  position: relative;
   transition: color 0.2s;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #2980b9;
+  transition: width 0.3s;
 }
 
 a:hover {
   color: #1c5980;
-  text-decoration: underline;
+}
+
+a:hover::after {
+  width: 100%;
 }
 
 /* ========== Адаптивні налаштування ===================== */
 @media (max-width: 700px) {
+  .header-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
   header h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
   section h2 {
     font-size: 1.5rem;
   }
-  article h3 {
-    font-size: 1.2rem;
-  }
-  main {
-    margin: 0 auto;
-    padding: 120px 15px 60px;
+  .project-grid {
+    grid-template-columns: 1fr;
   }
   .languages li {
     flex: 1 1 100%;
+  }
+  main {
+    margin: 0 auto;
+    padding: 120px 15px 80px;
   }
 }

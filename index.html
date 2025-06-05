@@ -2,126 +2,139 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Резюме Шмальцель Артур</title>
+  <title>Візитка — Шмальцель Артур</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Фіксований Header з навігацією -->
   <header>
-    <div class="header-content">
-      <h1>Шмальцель Артур</h1>
-      <h2>КБ-305</h2>
-      <p><a href="mailto:artur.shmaltel.kb.2022@lpnu.ua">artur.shmaltel.kb.2022@lpnu.ua</a> • Студент</p>
+    <div class="header-container">
+      <div class="logo">
+        <h1>Шмальцель Артур</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">Про себе</a></li>
+          <li><a href="#education">Освіта</a></li>
+          <li><a href="#experience">Досвід</a></li>
+          <li><a href="#skills">Навички</a></li>
+          <li><a href="#projects">Проєкти</a></li>
+          <li><a href="#contact">Контакти</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
+  <!-- Основний контент -->
   <main>
-    <!-- Використовуйте <hr> як розділювачі між секціями -->
-    <section>
-      <h2>Мета</h2>
-      <p>Отримати перший досвід роботи в галузі веб-розробки або програмування, застосовуючи знання, здобуті під час навчання в НУЛП та курсах Mate Academy.</p>
+    <!-- Розділ "Про себе" -->
+    <section id="about" class="section about">
+      <div class="content-wrapper">
+        <h2>Про себе</h2>
+        <p>Привіт! Я — <strong>Шмальцель Артур</strong>, студент НУЛП, захоплений веб-розробкою та кібербезпекою. Моя мета — створювати красиві й функціональні інтерфейси з максимальною увагою до деталей.</p>
+      </div>
     </section>
-
     <hr>
 
-    <section>
-      <h2>Освіта</h2>
-      <ul>
-        <li>
-          <strong>Національний університет “Львівська політехніка” (НУЛП)</strong><br>
-          Інститут комп’ютерних технологій та автоматизованих машин, спеціальність “Кібербезпека” (2022 — дотепер)<br>
-          Очікувана дата закінчення: червень 2025
-        </li>
-        <li>
-          <strong>Mate Academy</strong><br>
-          Онлайн-курс веб-розробки (жовтень 2023 — грудень 2023)<br>
-          Отримані навички: HTML, CSS, JavaScript, базова робота з React
-        </li>
-      </ul>
-    </section>
-
-    <hr>
-
-    <section>
-      <h2>Досвід роботи</h2>
-      <p>Поки що не мав офіційного досвіду роботи в сфері IT. Учасник навчальних проєктів і командних вправ під час курсів.</p>
-    </section>
-
-    <hr>
-
-    <section>
-      <h2>Навички</h2>
-      <ul>
-        <li><strong>Мови програмування:</strong> JavaScript, Python, Java, C, C++</li>
-        <li><strong>Веб-технології:</strong> HTML5, CSS3, Bootstrap (базовий рівень)</li>
-        <li><strong>Фреймворки та бібліотеки:</strong> React (створення компонентів, маршрутизація), Node.js (Express) — знайомий із налаштуванням серверів</li>
-        <li><strong>Контроль версій:</strong> Git, GitHub (commit, push, pull, merge)</li>
-        <li><strong>Бази даних:</strong> MySQL (SELECT, INSERT, UPDATE), знайомий із MongoDB</li>
-        <li><strong>Інструменти:</strong> Visual Studio Code, npm, командний рядок (bash, PowerShell)</li>
-        <li><strong>Софт-скіли:</strong> Аналітичне мислення, командна робота, комунікабельність, швидке навчання, відповідальність</li>
-      </ul>
-    </section>
-
-    <hr>
-
-    <section>
-      <h2>Проєкти</h2>
-
-      <article>
-        <h3>Веб-сайт-портфоліо</h3>
-        <p>Учасник проєкту курсів Mate Academy. Створив персональний односторінковий сайт-портфоліо з HTML, CSS та JavaScript.</p>
+    <!-- Розділ "Освіта" -->
+    <section id="education" class="section">
+      <div class="content-wrapper">
+        <h2>Освіта</h2>
         <ul>
-          <li>Розділ “Про себе” з біографією та контактами</li>
-          <li>Розділ “Навички” з динамічними прогресбарами</li>
-          <li>Форма зворотного зв’язку (перевірка валідності полів)</li>
-          <li>Адаптивна верстка для мобільних пристроїв</li>
+          <li>
+            <strong>Національний університет “Львівська політехніка” (НУЛП)</strong><br>
+            Інститут комп’ютерних технологій та автоматизованих машин, спеціальність “Кібербезпека” (2022 — дотепер)<br>
+            Очікувана дата закінчення: червень 2025
+          </li>
+          <li>
+            <strong>Mate Academy</strong><br>
+            Онлайн-курс веб-розробки (жовтень 2023 — грудень 2023)<br>
+            Отримані навички: HTML, CSS, JavaScript, базова робота з React
+          </li>
         </ul>
-      </article>
-
-      <article>
-        <h3>To-Do Додаток на React</h3>
-        <p>Написав простий додаток для списку справ:</p>
-        <ul>
-          <li>Додавання/видалення/позначення виконаних завдань</li>
-          <li>Збереження списку у localStorage</li>
-          <li>Використання React Hooks (useState, useEffect)</li>
-          <li>Проста маршрутизація між “Список” і “Про програму”</li>
-        </ul>
-      </article>
-
-      <article>
-        <h3>Скрипт для масової обробки даних (Python)</h3>
-        <p>Створив скрипт, який:</p>
-        <ul>
-          <li>Читає CSV-файл (список товарів із цінами)</li>
-          <li>Фільтрує, сортує за ціною та перераховує валюту</li>
-          <li>Записує результати у новий JSON-файл</li>
-        </ul>
-      </article>
+      </div>
     </section>
-
     <hr>
 
-    <section>
-      <h2>Мови</h2>
-      <ul class="languages">
-        <li>Українська — рідна</li>
-        <li>Англійська — середній рівень (C1)</li>
-      </ul>
+    <!-- Розділ "Досвід" -->
+    <section id="experience" class="section">
+      <div class="content-wrapper">
+        <h2>Досвід роботи</h2>
+        <p>Поки що не мав офіційного досвіду в IT. Участь у навчальних проєктах під час курсів Mate Academy: командні вправи з розробки веб-сайтів, скриптів, UI/UX-дизайну.</p>
+      </div>
     </section>
-
     <hr>
 
-    <section>
-      <h2>Додаткова інформація</h2>
-      <ul class="additional">
-        <li>Участь у хакатонах та технічних конкурсах університету</li>
-        <li>Хобі: читання технічних блогів, волонтерська діяльність у спільноті студентів</li>
-      </ul>
+    <!-- Розділ "Навички" -->
+    <section id="skills" class="section">
+      <div class="content-wrapper">
+        <h2>Навички</h2>
+        <ul class="skills-list">
+          <li><strong>Мови:</strong> JavaScript, Python, Java, C, C++</li>
+          <li><strong>Веб:</strong> HTML5, CSS3, Bootstrap</li>
+          <li><strong>Фреймворки:</strong> React, Node.js (Express)</li>
+          <li><strong>Бази даних:</strong> MySQL, MongoDB</li>
+          <li><strong>Контроль версій:</strong> Git, GitHub</li>
+          <li><strong>Інструменти:</strong> VS Code, npm, bash, PowerShell</li>
+          <li><strong>Софти:</strong> Аналітичне мислення, командна робота, комунікабельність</li>
+        </ul>
+      </div>
+    </section>
+    <hr>
+
+    <!-- Розділ "Проєкти" -->
+    <section id="projects" class="section">
+      <div class="content-wrapper">
+        <h2>Проєкти</h2>
+        <div class="project-grid">
+          <article class="project-card">
+            <h3>Веб-сайт-портфоліо</h3>
+            <p>Односторінковий сайт-портфоліо з HTML, CSS, JavaScript.</p>
+            <ul>
+              <li>Розділ “Про себе” з біографією</li>
+              <li>Розділ “Навички” з прогресбарами</li>
+              <li>Форма зворотного зв’язку</li>
+              <li>Адаптивна верстка</li>
+            </ul>
+          </article>
+          <article class="project-card">
+            <h3>To-Do Додаток на React</h3>
+            <p>Додаток для списку справ із React:</p>
+            <ul>
+              <li>Додавання/видалення завдань</li>
+              <li>Збереження у localStorage</li>
+              <li>React Hooks (useState, useEffect)</li>
+              <li>Маршрутизація</li>
+            </ul>
+          </article>
+          <article class="project-card">
+            <h3>Скрипт на Python</h3>
+            <p>Скрипт для масової обробки CSV-даних:</p>
+            <ul>
+              <li>Читання CSV, фільтрація</li>
+              <li>Сортування за ціною</li>
+              <li>Перерахунок валют</li>
+              <li>Запис у JSON</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <hr>
+
+    <!-- Розділ "Контакти" -->
+    <section id="contact" class="section">
+      <div class="content-wrapper">
+        <h2>Контакти</h2>
+        <p>Зв’язатися зі мною можна по email:</p>
+        <a href="mailto:artur.shmaltel.kb.2022@lpnu.ua" class="contact-button">Написати листа</a>
+      </div>
     </section>
   </main>
 
+  <!-- Фіксований Footer -->
   <footer>
-    <p>© Шмальцель Артур 2025</p>
+    <p>™ Шмальцель Артур 2025</p>
   </footer>
 </body>
 </html>
