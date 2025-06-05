@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Фіксований Header з навігацією та перемикачем теми -->
+  <!-- ===== Фіксований Header з навігацією та перемикачем теми ===== -->
   <header>
     <div class="header-container">
       <div class="logo">
@@ -26,7 +26,7 @@
     </div>
   </header>
 
-  <!-- Основний контент -->
+  <!-- ===== Основний контент ===== -->
   <main>
     <!-- Розділ "Про себе" -->
     <section id="about" class="section about">
@@ -138,33 +138,34 @@
       <div class="content-wrapper">
         <h2>Відгуки роботодавців</h2>
         <ul id="comments-list" class="comments-list">
-          <!-- Сюди JS додасть коментарі із сервера -->
+          <!-- JS вставить сюди коментарі -->
         </ul>
       </div>
     </section>
   </main>
 
-  <!-- Фіксований Footer з інформацією з localStorage -->
+  <!-- ===== Плаваюча кнопка "Показати/Приховати інфо" ===== -->
+  <button id="toggle-info-btn" class="toggle-info-btn">
+    <span id="toggle-icon">▲</span>
+    <span id="toggle-text">Приховати інфо</span>
+  </button>
+
+  <!-- ===== Фіксований Footer з інформацією з localStorage ===== -->
   <footer>
-    <div class="footer-top">
-      <button id="toggle-info-btn" class="toggle-info-btn">
-        <span id="toggle-icon">▲</span> <span id="toggle-text">Приховати інфо</span>
-      </button>
-      <div id="local-storage-info" class="footer-info">
-        <!-- Сюди JS вставить інформацію про ОС/браузер із localStorage -->
-      </div>
+    <div id="local-storage-info" class="footer-info">
+      <!-- JS вставить сюди інформацію про ОС/браузер -->
     </div>
     <div class="footer-brand">
       <p>™ Шмальцель Артур 2025</p>
     </div>
   </footer>
 
-  <!-- Модальне вікно з формою зворотного зв’язку -->
+  <!-- ===== Модальне вікно з формою зворотного зв’язку ===== -->
   <div id="feedback-modal" class="modal-overlay">
     <div class="modal-content">
       <button id="modal-close-btn" class="modal-close">&times;</button>
       <h2>Зворотній зв’язок</h2>
-      <!-- Замість YOUR_ENDPOINT підставте свій Formspree URL -->
+      <!-- Замініть "YOUR_ENDPOINT" на ваш Formspree endpoint -->
       <form id="feedback-form" action="https://formspree.io/f/YOUR_ENDPOINT" method="POST" target="_blank">
         <label for="fb-name">Ім’я:</label>
         <input type="text" id="fb-name" name="name" required>
@@ -183,7 +184,7 @@
     </div>
   </div>
 
-  <!-- Підключення скрипту -->
+  <!-- ===== Підключення скрипту ===== -->
   <script src="script.js"></script>
 </body>
 </html>

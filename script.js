@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========== 1. Зберігання даних у браузері ==========
-
 function storeUserInfo() {
   const userAgent = navigator.userAgent;
   const platform = navigator.platform;
@@ -22,14 +21,7 @@ function storeUserInfo() {
   const screenSize = `${screen.width}×${screen.height}`;
   const timestamp = new Date().toLocaleString();
 
-  const userInfo = {
-    userAgent,
-    platform,
-    language,
-    screenSize,
-    timestamp
-  };
-
+  const userInfo = { userAgent, platform, language, screenSize, timestamp };
   localStorage.setItem('userInfo', JSON.stringify(userInfo));
 }
 
@@ -41,8 +33,6 @@ function displayStoredUserInfo() {
     return;
   }
   const info = JSON.parse(stored);
-
-  // Формуємо HTML-рядок для виводу
   footerInfo.innerHTML = `
     <ul>
       <li><strong>userAgent:</strong> ${info.userAgent}</li>
@@ -55,7 +45,6 @@ function displayStoredUserInfo() {
 }
 
 // ========== 2. Відображення динамічного вмісту із сервера ==========
-
 function fetchComments() {
   const url = `https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`;
   fetch(url)
@@ -81,42 +70,29 @@ function fetchComments() {
       list.innerHTML = '<li>Не вдалося завантажити коментарі.</li>';
     });
 }
-
-// Простий ескап для HTML (щоб уникнути XSS у цьому прикладі)
 function escapeHTML(str) {
   return str.replace(/[&<>"']/g, tag => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[tag]));
 }
 
 // ========== 3. Відправлення форми зворотного зв’язку ==========
-
 function scheduleFeedbackModal() {
-  // Через 60 секунд показуємо модалку
-  setTimeout(showFeedbackModal, 60000);
+  setTimeout(showFeedbackModal, 60000); // через 60 секунд
 }
-
 function showFeedbackModal() {
   const overlay = document.getElementById('feedback-modal');
   overlay.classList.add('visible');
-  // Додаємо слухач для закриття
   document.getElementById('modal-close-btn').addEventListener('click', hideFeedbackModal);
-  // За кліком поза вікном теж ховаємо
   overlay.addEventListener('click', e => {
     if (e.target === overlay) hideFeedbackModal();
   });
 }
-
 function hideFeedbackModal() {
   document.getElementById('feedback-modal').classList.remove('visible');
 }
 
 // ========== 4. Перемикач теми (день/ніч) ==========
-
 function setupThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   btn.addEventListener('click', () => {
@@ -125,11 +101,9 @@ function setupThemeToggle() {
   });
   loadThemePreference();
 }
-
 function applyAutoTheme() {
   const now = new Date();
   const hours = now.getHours();
-  // Денна тема: 07:00—21:00
   if (hours < 7 || hours >= 21) {
     document.body.classList.add('dark-mode');
   } else {
@@ -137,12 +111,10 @@ function applyAutoTheme() {
   }
   saveThemePreference();
 }
-
 function saveThemePreference() {
   const isDark = document.body.classList.contains('dark-mode');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
-
 function loadThemePreference() {
   const pref = localStorage.getItem('theme');
   if (pref === 'dark') {
@@ -150,11 +122,9 @@ function loadThemePreference() {
   } else if (pref === 'light') {
     document.body.classList.remove('dark-mode');
   }
-  // Якщо null, то лишаємо те, що задала applyAutoTheme()
 }
 
-// ========== 5. Перемикач видимості блоку з інформацією у футері ==========
-
+// ========== 5. Перемикач видимості блоку з інформацією ==========
 function setupInfoToggle() {
   const btn = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
@@ -175,6 +145,6 @@ function setupInfoToggle() {
     }
   });
 
-  // На початку – показуємо інформацію
+  // Початково показуємо блок з інформацією
   infoDiv.classList.add('visible');
 }
