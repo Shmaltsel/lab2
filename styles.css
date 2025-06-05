@@ -1,61 +1,85 @@
-/* ========== Загальні налаштування ========== */
+/* ===================== Загальні налаштування ===================== */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #2c3e50;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ecf0f1;
+  color: #2c3e50;
   line-height: 1.6;
 }
 
-main {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px 40px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-/* ========== Заголовок ========== */
+/* ========== Фіксований Header ========== */
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
   color: #ffffff;
   text-align: center;
-  padding: 50px 20px 30px;
+  padding: 20px 0 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+header .header-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.8rem;
+  font-size: 2.4rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 header p {
-  margin: 10px 0;
-  font-size: 1.05rem;
-  opacity: 0.85;
+  margin: 8px 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
 }
 
 header a {
   color: #ecf0f1;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  text-decoration: underline;
+  transition: color 0.2s;
 }
 header a:hover {
-  border-color: #ecf0f1;
+  color: #d1e8ff;
 }
 
-/* ========== Роздільні лінії ========== */
+/* ========== Фіксований Footer ========== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2c3e50;
+  color: #bdc3c7;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 0.95rem;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== Основний вміст ========== */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 140px 20px 60px; /* враховуємо висоту header (≈80px) і footer (≈40px) */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== Горизонтальні лінії-роздільники ========== */
 hr {
   border: none;
   height: 2px;
   background-color: #bdc3c7;
-  margin: 0;
+  margin: 20px 0;
 }
 
 /* ========== Секції ========== */
@@ -63,47 +87,48 @@ section {
   padding: 30px 0;
 }
 
-/* Фон для кожної другої секції */
+/* Змінний фон для кожної непарної секції */
 section:nth-of-type(odd) {
   background-color: #f7f9fb;
+  border-radius: 4px;
 }
 
 /* Заголовки секцій */
 section h2 {
   margin-bottom: 16px;
   font-size: 1.7rem;
-  color: #2c3e50;
-  display: inline-block;
+  color: #34495e;
   position: relative;
-  padding-left: 12px;
+  padding-left: 16px;
 }
 
-/* Лінія збоку заголовка */
+/* Ліва кольорова смужка поруч із заголовком */
 section h2::before {
   content: "";
   position: absolute;
   left: 0;
   top: 4px;
-  width: 6px;
+  width: 8px;
   height: calc(100% - 8px);
   background-color: #2980b9;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
-/* ========== Списки ========== */
+/* ========== Списки ===================== */
 section ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 section ul li {
   position: relative;
-  padding-left: 24px;
-  margin-bottom: 10px;
+  padding-left: 28px;
+  margin-bottom: 12px;
   color: #34495e;
 }
 
-/* Кастомний маркер */
+/* Кастомні маркери списку */
 section ul li::before {
   content: "•";
   position: absolute;
@@ -115,24 +140,24 @@ section ul li::before {
   transform: translateY(2px);
 }
 
-/* ========== Проекти ========== */
+/* ========== Проєкти ===================== */
 article {
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 20px 24px;
   background-color: #ffffff;
-  border-left: 4px solid #3498db;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-left: 6px solid #3498db;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 article:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 article h3 {
-  margin-bottom: 10px;
+  margin: 0 0 10px;
   font-size: 1.3rem;
   color: #2c3e50;
 }
@@ -145,14 +170,16 @@ article p {
 article ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
 article ul li {
   position: relative;
-  padding-left: 24px;
+  padding-left: 28px;
   margin-bottom: 8px;
   color: #34495e;
 }
+
 article ul li::before {
   content: "►";
   position: absolute;
@@ -164,43 +191,60 @@ article ul li::before {
   transform: translateY(1px);
 }
 
-/* ========== Мови ========== */
+/* ========== Розділ “Мови” ===================== */
 .languages {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
+
 .languages li {
   flex: 1 1 calc(50% - 20px);
   background-color: #ffffff;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
 }
+
 .languages li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
+
 .languages li::before {
   content: "";
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background-color: #2980b9;
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
-/* ========== Додаткова інформація ========== */
+/* ========== Додаткова інформація ===================== */
 .additional li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-/* ========== Адаптивні налаштування ========== */
+/* ========== Псевдокласи та посилання ===================== */
+a {
+  color: #2980b9;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #1c5980;
+  text-decoration: underline;
+}
+
+/* ========== Адаптивні налаштування ===================== */
 @media (max-width: 700px) {
   header h1 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
   section h2 {
     font-size: 1.5rem;
@@ -209,8 +253,8 @@ article ul li::before {
     font-size: 1.2rem;
   }
   main {
-    margin: 20px auto;
-    padding: 0 15px 30px;
+    margin: 0 auto;
+    padding: 120px 15px 60px;
   }
   .languages li {
     flex: 1 1 100%;
