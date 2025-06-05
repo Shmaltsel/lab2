@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Фіксований Header з навігацією та перемикачем теми -->
   <header>
     <div class="header-container">
       <div class="logo">
@@ -21,14 +22,17 @@
           <li><a href="#contact">Контакти</a></li>
         </ul>
       </nav>
+      <button id="theme-toggle" aria-label="Перемкнути тему">🌗</button>
     </div>
   </header>
 
+  <!-- Основний контент -->
   <main>
+    <!-- Розділ "Про себе" -->
     <section id="about" class="section about">
       <div class="content-wrapper">
         <h2>Про себе</h2>
-        <p>Привіт! Я — <strong>Шмальцель Артур</strong>, студент НУЛП, група - КБ-305, захоплений веб-розробкою та кібербезпекою. Моя мета — створювати красиві й функціональні веб-додатки.</p>
+        <p>Привіт! Я — <strong>Шмальцель Артур</strong>, студент НУЛП, захоплений веб-розробкою та кібербезпекою. Моя мета — створювати красиві й функціональні інтерфейси з максимальною увагою до деталей.</p>
       </div>
     </section>
     <hr>
@@ -40,7 +44,7 @@
         <ul>
           <li>
             <strong>Національний університет “Львівська політехніка” (НУЛП)</strong><br>
-            Інститут комп’ютерних технологій та автоматизованих машин, спеціальність “Кібербезпека(125)” (2022 — дотепер)<br>
+            Інститут комп’ютерних технологій та автоматизованих машин, спеціальність “Кібербезпека” (2022 — дотепер)<br>
             Очікувана дата закінчення: червень 2025
           </li>
           <li>
@@ -123,16 +127,58 @@
     <section id="contact" class="section">
       <div class="content-wrapper">
         <h2>Контакти</h2>
-        <p>Зв’язатися зі мною можна по email: 
-  <a href="mailto:artur.shmaltel.kb.2022@lpnu.ua">artur.shmaltel.kb.2022@lpnu.ua</a>
-</p>
+        <p>Зв’язатися зі мною можна по email:</p>
+        <a href="mailto:artur.shmaltel.kb.2022@lpnu.ua" class="contact-button">Написати листа</a>
+      </div>
+    </section>
+    <hr>
+
+    <!-- Розділ з коментарями від “роботодавців” -->
+    <section id="comments" class="section">
+      <div class="content-wrapper">
+        <h2>Відгуки роботодавців</h2>
+        <ul id="comments-list" class="comments-list">
+          <!-- Сюди JS додасть коментарі із сервера -->
+        </ul>
       </div>
     </section>
   </main>
 
-  <!-- Фіксований Footer -->
+  <!-- Фіксований Footer з інформацією з localStorage -->
   <footer>
-    <p>™ Шмальцель Артур 2025</p>
+    <div id="local-storage-info" class="footer-info">
+      <!-- Сюди JS вставить інформацію про ОС/браузер із localStorage -->
+    </div>
+    <div class="footer-brand">
+      <p>™ Шмальцель Артур 2025</p>
+    </div>
   </footer>
+
+  <!-- Модальне вікно з формою зворотного зв’язку -->
+  <div id="feedback-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="modal-close-btn" class="modal-close">&times;</button>
+      <h2>Зворотній зв’язок</h2>
+      <!-- Замість YOUR_ENDPOINT підставте свій Formspree URL -->
+      <form id="feedback-form" action="https://formspree.io/f/YOUR_ENDPOINT" method="POST" target="_blank">
+        <label for="fb-name">Ім’я:</label>
+        <input type="text" id="fb-name" name="name" required>
+
+        <label for="fb-email">Email:</label>
+        <input type="email" id="fb-email" name="email" required>
+
+        <label for="fb-phone">Номер телефону:</label>
+        <input type="tel" id="fb-phone" name="phone" pattern="[0-9+\-\s]+" placeholder="+38 (___) ___-____">
+
+        <label for="fb-message">Повідомлення:</label>
+        <textarea id="fb-message" name="message" rows="4" required></textarea>
+
+        <button type="submit" class="submit-btn">Відправити</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Підключення свого скрипта -->
+  <script src="script.js"></script>
 </body>
 </html>
