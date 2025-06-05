@@ -663,7 +663,7 @@ body.dark-mode .comment-item {
 body.dark-mode .comment-item:nth-child(odd) {
   background-color: #22314b;
 }
-#about p{
+#about{
   text-align: center;
   color: #34495e;
 }
