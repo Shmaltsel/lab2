@@ -1,12 +1,9 @@
-// ========== script.js ==========
-
-// Встановіть свій номер варіанту:
-const VARIANT_NUMBER = 1; // Замініть 1 на свій номер варіанту
+const VARIANT_NUMBER = 32;
 
 document.addEventListener('DOMContentLoaded', () => {
-  storeUserInfo();          // 1. Зберігаємо ОС/браузер у localStorage
-  displayStoredUserInfo();  // 2. Відображаємо дані у футері
-  fetchComments();          // 3. Завантажуємо та відображаємо коментарі
+  storeUserInfo();          // 1. Зберігаання ОС/браузер у localStorage
+  displayStoredUserInfo();  // 2. Відображаення данмх у футері
+  fetchComments();          // 3. Завантаження та відображаємо коментарі
   scheduleFeedbackModal();  // 4. Показ модалки через 60 секунд
   setupThemeToggle();       // 5. Перемикач теми (день/ніч)
   applyAutoTheme();         // 6. Автоматичне перемикання теми за часом
@@ -15,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollColorShift();  // 9. Зміна фону при скролі
 });
 
-// ========== 1. Зберігання даних у браузері ==========
 function storeUserInfo() {
   const userAgent = navigator.userAgent;
   const platform = navigator.platform;
@@ -46,7 +42,6 @@ function displayStoredUserInfo() {
   `;
 }
 
-// ========== 2. Завантаження та відображення коментарів ==========
 function fetchComments() {
   const url = `https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`;
   fetch(url)
@@ -80,7 +75,6 @@ function escapeHTML(str) {
   }[tag]));
 }
 
-// ========== 3. Модальне вікно з формою ==========
 function scheduleFeedbackModal() {
   setTimeout(showFeedbackModal, 60000); // 60 секунд
 }
@@ -127,37 +121,33 @@ function loadThemePreference() {
   }
 }
 
-// ========== 5. Плаваюча кнопка «Приховати/Показати інфо» ==========
 function setupInfoToggle() {
   const btn = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
   const icon = document.getElementById('toggle-icon');
   const text = document.getElementById('toggle-text');
 
-  let visible = false; // стан: false = приховано, true = показано
+  let visible = false; 
 
   btn.addEventListener('click', () => {
     visible = !visible;
 
-    // Додаємо клас для обертання іконки
     btn.classList.add('rotate');
     setTimeout(() => btn.classList.remove('rotate'), 600);
 
     if (visible) {
-      // Розгортаємо панель
       infoDiv.classList.add('visible');
       icon.textContent = '▲';
       text.textContent = 'Приховати інфо';
     } else {
-      // Згортаємо панель
       infoDiv.classList.remove('visible');
       icon.textContent = '▼';
       text.textContent = 'Показати інфо';
     }
   });
-} // ← Закриваємо setupInfoToggle
+} 
 
-// ========== 6. Кнопка «Scroll to Top» ==========
+
 function setupScrollTopButton() {
   const btn = document.getElementById('scroll-top-btn');
   window.addEventListener('scroll', () => {
@@ -173,7 +163,7 @@ function setupScrollTopButton() {
   });
 }
 
-// ========== 7. Зміна фону при скролі ==========
+
 function setupScrollColorShift() {
   window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY || window.pageYOffset;
