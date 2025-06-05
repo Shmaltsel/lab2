@@ -147,7 +147,9 @@
   <!-- Фіксований Footer з інформацією з localStorage -->
   <footer>
     <div class="footer-top">
-      <button id="toggle-info-btn" class="toggle-info-btn">Приховати інфо</button>
+      <button id="toggle-info-btn" class="toggle-info-btn">
+        <span id="toggle-icon">▲</span> <span id="toggle-text">Приховати інфо</span>
+      </button>
       <div id="local-storage-info" class="footer-info">
         <!-- Сюди JS вставить інформацію про ОС/браузер із localStorage -->
       </div>
@@ -163,7 +165,7 @@
       <button id="modal-close-btn" class="modal-close">&times;</button>
       <h2>Зворотній зв’язок</h2>
       <!-- Замість YOUR_ENDPOINT підставте свій Formspree URL -->
-      <form id="feedback-form"   action="https://formspree.io/f/xzzgzwrd" method="POST" target="_blank">
+      <form id="feedback-form" action="https://formspree.io/f/YOUR_ENDPOINT" method="POST" target="_blank">
         <label for="fb-name">Ім’я:</label>
         <input type="text" id="fb-name" name="name" required>
 

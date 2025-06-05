@@ -1,7 +1,7 @@
 // ========== script.js ==========
 
 // Встановіть свій номер варіанту:
-const VARIANT_NUMBER = 32; // Замініть 1 на свій номер варіанту
+const VARIANT_NUMBER = 1; // Замініть 1 на свій номер варіанту
 
 document.addEventListener('DOMContentLoaded', () => {
   storeUserInfo();          // 1.a: Зберігаємо ОС/браузер у localStorage
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   scheduleFeedbackModal();  // 3.a: Показ модалки через 1 хвилину
   setupThemeToggle();       // 4.a: Налаштування перемикача теми
   applyAutoTheme();         // 4.b: Автоматичне перемикання (07:00—21:00 → день, інакше ніч)
-  setupInfoToggle();        // Новий метод для кнопки “Приховати інфо”
+  setupInfoToggle();        // 5: Перемикач видимості блоку з інформацією
 });
 
 // ========== 1. Зберігання даних у браузері ==========
@@ -37,14 +37,13 @@ function displayStoredUserInfo() {
   const footerInfo = document.getElementById('local-storage-info');
   const stored = localStorage.getItem('userInfo');
   if (!stored) {
-    footerInfo.textContent = 'Немає даних про користувача.';
+    footerInfo.innerHTML = '<p>Немає даних про користувача.</p>';
     return;
   }
   const info = JSON.parse(stored);
 
   // Формуємо HTML-рядок для виводу
   footerInfo.innerHTML = `
-    <p><strong>Інфо про браузер/ПЗ:</strong></p>
     <ul>
       <li><strong>userAgent:</strong> ${info.userAgent}</li>
       <li><strong>platform:</strong> ${info.platform}</li>
@@ -154,21 +153,28 @@ function loadThemePreference() {
   // Якщо null, то лишаємо те, що задала applyAutoTheme()
 }
 
-// ========== 5. Перемикання видимості блоку з інформацією ==========
+// ========== 5. Перемикач видимості блоку з інформацією у футері ==========
 
 function setupInfoToggle() {
   const btn = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
-  let hidden = false;
+  const icon = document.getElementById('toggle-icon');
+  const text = document.getElementById('toggle-text');
+  let visible = true;
 
   btn.addEventListener('click', () => {
-    hidden = !hidden;
-    if (hidden) {
-      infoDiv.style.display = 'none';
-      btn.textContent = 'Показати інфо';
+    visible = !visible;
+    if (visible) {
+      infoDiv.classList.add('visible');
+      icon.textContent = '▲';
+      text.textContent = 'Приховати інфо';
     } else {
-      infoDiv.style.display = 'block';
-      btn.textContent = 'Приховати інфо';
+      infoDiv.classList.remove('visible');
+      icon.textContent = '▼';
+      text.textContent = 'Показати інфо';
     }
   });
+
+  // На початку – показуємо інформацію
+  infoDiv.classList.add('visible');
 }

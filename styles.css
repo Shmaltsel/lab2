@@ -1,6 +1,6 @@
 /* ===================== Загальні налаштування ===================== */
 html {
-  scroll-behavior: smooth; /* плавний скрол */
+  scroll-behavior: smooth; /* Плавний скрол */
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* IE10+ */
   user-select: none;         /* стандарт */
-  transition: background-color 0.5s ease, color 0.5s ease; /* анімація для теми */
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* ===================== Фіксований Header ===================== */
@@ -129,10 +129,12 @@ footer {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .toggle-info-btn {
@@ -140,10 +142,17 @@ footer {
   color: #ffffff;
   border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   user-select: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 4px;
 }
 
 .toggle-info-btn:hover {
@@ -154,18 +163,21 @@ footer {
 .footer-info {
   text-align: left;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 8px auto;
   color: #ecf0f1;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
-.footer-info ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 4px 0;
+.footer-info.visible {
+  max-height: 500px; /* максимально достатньо для вмісту */
+  opacity: 1;
 }
 
 .footer-brand {
-  margin-top: 8px;
+  margin-top: 4px;
   font-size: 0.9rem;
 }
 
@@ -173,7 +185,7 @@ footer {
 main {
   max-width: 900px;
   margin: 0 auto;
-  padding: 120px 20px 80px; /* враховує висоту header і footer */
+  padding: 120px 20px 80px;
   background-color: #ffffff;
   border-radius: 8px;
   -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -552,22 +564,22 @@ body.dark-mode .section h2 {
 }
 
 body.dark-mode .section h2::before {
-  background-color: #3498db;
+  background-color: #5dade2; /* світліший синій для кращої читаності */
 }
 
 body.dark-mode .section ul li::before {
-  color: #3498db;
+  color: #5dade2;
 }
 
 body.dark-mode .project-card {
   background-color: #2b2b2d;
-  border-left-color: #3498db;
+  border-left-color: #5dade2;
   -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 body.dark-mode .project-card:hover {
-  border-color: #2980b9;
+  border-color: #85c1e9;
   -webkit-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
 }
@@ -579,10 +591,10 @@ body.dark-mode .project-card ul li {
 }
 
 body.dark-mode .contact-button {
-  background-color: #3498db;
+  background-color: #5dade2;
 }
 body.dark-mode .contact-button:hover {
-  background-color: #2980b9;
+  background-color: #3498db;
 }
 
 body.dark-mode .languages li {
@@ -652,5 +664,9 @@ body.dark-mode .comment-item:nth-child(odd) {
   main {
     margin: 0 auto;
     padding: 120px 15px 80px;
+  }
+  .footer-top {
+    flex-direction: column;
+    gap: 8px;
   }
 }
