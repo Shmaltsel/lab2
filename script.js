@@ -1,14 +1,16 @@
 // ========== script.js ==========
-// Встановлюємо свій номер варіанту:
+
+// Встановіть свій номер варіанту:
 const VARIANT_NUMBER = 1; // Замініть 1 на свій номер варіанту
 
 document.addEventListener('DOMContentLoaded', () => {
   storeUserInfo();          // 1.a: Зберігаємо ОС/браузер у localStorage
-  displayStoredUserInfo();  // 1.b: Відображаємо в футері
-  fetchComments();          // 2.a: Завантаження і відображення коментарів
+  displayStoredUserInfo();  // 1.b: Відображаємо у футері
+  fetchComments();          // 2.a: Завантажуємо й відображаємо коментарі
   scheduleFeedbackModal();  // 3.a: Показ модалки через 1 хвилину
-  setupThemeToggle();       // 4.a: Перемикач теми
-  applyAutoTheme();         // 4.b: Автоматичне перемикання на основі часу
+  setupThemeToggle();       // 4.a: Налаштування перемикача теми
+  applyAutoTheme();         // 4.b: Автоматичне перемикання (07:00—21:00 → день, інакше ніч)
+  setupInfoToggle();        // Новий метод для кнопки “Приховати інфо”
 });
 
 // ========== 1. Зберігання даних у браузері ==========
@@ -128,13 +130,13 @@ function setupThemeToggle() {
 function applyAutoTheme() {
   const now = new Date();
   const hours = now.getHours();
-  // Денна тема з 07:00 до 21:00, інший час — нічна
+  // Денна тема: 07:00—21:00
   if (hours < 7 || hours >= 21) {
     document.body.classList.add('dark-mode');
   } else {
     document.body.classList.remove('dark-mode');
   }
-  saveThemePreference(); // Записуємо, щоб не перекривалось вручну
+  saveThemePreference();
 }
 
 function saveThemePreference() {
@@ -149,5 +151,24 @@ function loadThemePreference() {
   } else if (pref === 'light') {
     document.body.classList.remove('dark-mode');
   }
-  // Якщо null (перше завантаження), залишаємо те, що встановив applyAutoTheme
+  // Якщо null, то лишаємо те, що задала applyAutoTheme()
+}
+
+// ========== 5. Перемикання видимості блоку з інформацією ==========
+
+function setupInfoToggle() {
+  const btn = document.getElementById('toggle-info-btn');
+  const infoDiv = document.getElementById('local-storage-info');
+  let hidden = false;
+
+  btn.addEventListener('click', () => {
+    hidden = !hidden;
+    if (hidden) {
+      infoDiv.style.display = 'none';
+      btn.textContent = 'Показати інфо';
+    } else {
+      infoDiv.style.display = 'block';
+      btn.textContent = 'Приховати інфо';
+    }
+  });
 }
