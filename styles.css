@@ -1,737 +1,168 @@
-/* ===================== Анімація градієнтного фону ===================== */
-@keyframes gradientBackground {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* ===================== ДОДАТКОВІ СТИЛІ ДЛЯ МОБІЛЬНИХ ===================== */
+/* Усі ці правила вставте наприкінці вашого існуючого styles.css */
 
-/* ===================== Загальні налаштування ===================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 100%;     /* 1rem = 16px */
-  line-height: 1.5;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: hsl(211, 100%, 50%);
-  color: #4106A6;
-  line-height: 1.6;
-  user-select: none;
-  transition: background-color 0.3s ease;
-}
-
-/* ===================== ФІКСОВАНИЙ HEADER ===================== */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(44, 62, 80, 0.85);
-  backdrop-filter: blur(8px);
-  color: #ecf0f1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: background 0.8s ease, color 0.8s ease;
-}
-
-.header-container {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-nav a {
-  color: #ecf0f1;
-  text-decoration: none;
-  font-weight: 500;
-  position: relative;
-  transition: color 0.6s ease, transform 0.6s ease;
-}
-nav a:hover {
-  transform: translateY(-2px);
-}
-nav a::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background-color: #ecf0f1;
-  transition: width 0.6s ease;
-}
-nav a:hover::after {
-  width: 100%;
-}
-
-/* ===================== КНОПКА ПЕРЕМИКАННЯ ТЕМИ ===================== */
-#theme-toggle {
-  background: none;
-  border: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #ecf0f1;
-  transition: color 0.6s ease, transform 0.6s ease;
-}
-#theme-toggle:hover {
-  transform: scale(1.2);
-  color: #f1c40f;
-}
-
-/* ===================== ФІКСОВАНИЙ FOOTER ===================== */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(44, 62, 80, 0.85);
-  backdrop-filter: blur(8px);
-  color: #bdc3c7;
-  text-align: center;
-  padding: 12px 0 4px;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-  user-select: none;
-  transition: background 0.8s ease, color 0.8s ease;
-}
-
-.footer-info {
-  text-align: left;
-  max-width: 900px;
-  margin: 0 auto;
-  color: #ecf0f1;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.6s ease, opacity 0.6s ease;
-}
-.footer-info.visible {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.footer-brand {
-  margin-top: 6px;
-  font-size: 0.9rem;
-  color: #ecf0f1;
-}
-
-/* ===================== ПЛАВАЮЧА КНОПКА «ПРИХОВАТИ/ПОКАЗАТИ ІНФО» ===================== */
-.toggle-info-btn {
-  position: fixed;
-  bottom: 80px;
-  left: 20px;
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  padding: 10px 16px;        /* трохи збільшили padding для зручнішого натискання */
-  border-radius: 24px;
-  font-size: 1rem;           /* трохи більший шрифт */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-  user-select: none;
-  z-index: 1000;
-}
-.toggle-info-btn:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-}
-
-/* Анімація обертання іконки при кліку */
-@keyframes rotateIcon {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
-}
-.toggle-info-btn.rotate #toggle-icon {
-  animation: rotateIcon 0.6s ease;
-}
-
-/* ===================== ПЛАВАЮЧА КНОПКА «SCROLL TO TOP» ===================== */
-.scroll-top-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease;
-  pointer-events: none;
-  z-index: 1000;
-}
-.scroll-top-btn.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.scroll-top-btn:hover {
-  background-color: #2980b9;
-  transform: translateY(0) scale(1.1);
-}
-
-/* ===================== ОСНОВНИЙ КОНТЕНТ ===================== */
-main {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 120px 20px 80px;
-  background-color: rgba(236, 240, 241, 0.9);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: background-color 0.8s ease, color 0.8s ease;
-}
-
-/* ===================== РОЗДІЛЬНИКИ ===================== */
-hr {
-  border: none;
-  height: 2px;
-  background-color: #bdc3c7;
-  margin: 20px 0;
-  opacity: 0;
-  animation: fadeIn 1.2s ease forwards;
-  animation-delay: 0.4s;
-  transition: background-color 0.8s ease;
-}
-
-/* ===================== СЕКЦІЇ (fadeInUp) ===================== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.section {
-  padding: 30px 0;
-  user-select: none;
-  transition: background-color 0.8s ease, color 0.8s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s ease forwards;
-}
-/* Затримки для секцій */
-.section:nth-of-type(1) { animation-delay: 0.2s; }
-.section:nth-of-type(2) { animation-delay: 0.4s; }
-.section:nth-of-type(3) { animation-delay: 0.6s; }
-.section:nth-of-type(4) { animation-delay: 0.8s; }
-.section:nth-of-type(5) { animation-delay: 1.0s; }
-.section:nth-of-type(6) { animation-delay: 1.2s; }
-.section:nth-of-type(7) { animation-delay: 1.4s; }
-
-.section:nth-of-type(odd) {
-  background-color: #f7f9fb;
-  border-radius: 4px;
-}
-
-.content-wrapper {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-/* Заголовок секції */
-.section h2 {
-  margin-bottom: 16px;
-  font-size: 1.8rem;
-  color: #34495e;
-  position: relative;
-  padding-left: 16px;
-  transition: color 0.8s ease;
-}
-.section h2::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  width: 8px;
-  height: calc(100% - 8px);
-  background-color: #2980b9;
-  border-radius: 4px;
-  transition: background-color 0.8s ease;
-}
-
-/* ===================== СПИСКИ ===================== */
-.section ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.section ul li {
-  position: relative;
-  padding-left: 28px;
-  margin-bottom: 12px;
-  color: #34495e;
-  transition: color 0.5s ease;
-  font-size: 1rem;          /* трохи зменшили базовий розмір списків */
-}
-.section ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #2980b9;
-  font-size: 1.4rem;
-  line-height: 1;
-  transform: translateY(2px);
-  transition: color 0.8s ease;
-}
-.section ul li:hover {
-  color: #2980b9;
-}
-
-/* ===================== ПРОЄКТИ ===================== */
-.project-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-.project-card {
-  flex: 1 1 calc(30% - 24px);
-  background-color: #ffffff;
-  border-left: 6px solid #3498db;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-  padding: 20px;
-  transition:
-    transform 0.7s cubic-bezier(0.25,0.8,0.25,1),
-    box-shadow 0.7s cubic-bezier(0.25,0.8,0.25,1),
-    border-color 0.7s ease,
-    background-color 0.8s ease,
-    color 0.8s ease;
-  user-select: none;
-}
-.project-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  border-color: #2980b9;
-}
-.project-card h3 {
-  margin-top: 0;
-  font-size: 1.3rem;
-  color: #2c3e50;
-  transition: color 0.8s ease;
-}
-.project-card p {
-  margin: 8px 0;
-  color: #4b6a87;
-  transition: color 0.8s ease;
-}
-.project-card ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.project-card ul li {
-  position: relative;
-  padding-left: 28px;
-  margin-bottom: 8px;
-  color: #34495e;
-  transition: color 0.5s ease;
-}
-.project-card ul li::before {
-  content: "►";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #2980b9;
-  font-size: 1.1rem;
-  line-height: 1;
-  transform: translateY(1px);
-  transition: color 0.8s ease;
-}
-.project-card ul li:hover {
-  color: #2980b9;
-}
-
-/* ===================== КНОПКА EMAIL ===================== */
-.email-button {
-  background-color: #8e44ad;
-  color: #ffffff;
-  border: none;
-  padding: 14px 28px;      /* збільшили padding */
-  border-radius: 28px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-  user-select: none;
-}
-.email-button:hover {
-  background-color: #9b59b6;
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* ===================== КНОПКА «ВІДПРАВИТИ» У МОДАЛЦІ ===================== */
-.submit-btn {
-  margin-top: 16px;
-  background-color: #2980b9;
-  color: #ffffff;
-  border: none;
-  padding: 12px 26px;      /* трохи більший padding */
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.4s ease, transform 0.4s ease;
-  user-select: none;
-}
-.submit-btn:hover {
-  background-color: #1f5f8b;
-  transform: translateY(-3px) scale(1.03);
-}
-
-/* ===================== КНОПКА КОНТАКТІВ ===================== */
-.contact-button {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 12px 26px;      /* трохи більший padding */
-  background-color: #2980b9;
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 1rem;         /* збільшили шрифт кнопки */
-  transition: background-color 0.4s ease, transform 0.4s ease;
-  user-select: none;
-}
-.contact-button:hover {
-  background-color: #1f5f8b;
-  transform: translateY(-3px) scale(1.02);
-}
-
-/* ===================== РОЗДІЛ “МОВИ” ===================== */
-.languages {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.languages li {
-  flex: 1 1 calc(45% - 20px);
-  background-color: #ffffff;
-  padding: 14px 18px;
-  border-radius: 4px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.8s ease, color 0.8s ease;
-  user-select: none;
-}
-.languages li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-  background-color: #f0f8ff;
-}
-.languages li::before {
-  content: "";
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background-color: #2980b9;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-/* ===================== ДОДАТКОВА ІНФОРМАЦІЯ ===================== */
-.additional li {
-  margin-bottom: 10px;
-}
-
-/* ===================== МОДАЛЬНЕ ВІКНО ===================== */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  transition: opacity 0.4s ease;
-}
-.modal-overlay.visible {
-  display: flex;
-  opacity: 1;
-}
-.modal-content {
-  background-color: #ffffff;
-  padding: 24px 30px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  user-select: text;
-  transition: background-color 0.8s ease, color 0.8s ease, transform 0.4s ease;
-  transform: translateY(-20px);
-  animation: modalSlideDown 0.5s ease forwards;
-}
-@keyframes modalSlideDown {
-  to { transform: translateY(0); }
-}
-.modal-close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #555;
-  transition: color 0.3s ease;
-}
-.modal-close:hover {
-  color: #c0392b;
-}
-.modal-content h2 {
-  margin-top: 0;
-  font-size: 1.5rem;
-  color: #2c3e50;
-  transition: color 0.8s ease;
-}
-.modal-content label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 500;
-  color: #34495e;
-  transition: color 0.8s ease;
-}
-.modal-content input,
-.modal-content textarea {
-  width: 100%;
-  padding: 8px 10px;
-  margin-top: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
-}
-
-/* ===================== КОМЕНТАРІ ===================== */
-.comments-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.comment-item {
-  background-color: #ffffff;
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  border-radius: 4px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.8s ease, color 0.8s ease, opacity 0.8s ease;
-  user-select: none;
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-}
-.comment-item:nth-child(1) { animation-delay: 1.2s; }
-.comment-item:nth-child(2) { animation-delay: 1.4s; }
-.comment-item:nth-child(3) { animation-delay: 1.6s; }
-/* Якщо більше коментарів, можна додати delay аналогічно */
-.comment-item:nth-of-type(odd) {
-  background-color: #f0f8ff;
-}
-.comment-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* ===================== ТЕМНА ТЕМА (ЧОРНИЙ ФОН) ===================== */
-body.dark-mode {
-  background-color: #000000; /* тепер у темній темі фон — чистий чорний */
-  color: #dcdcdc;
-}
-body.dark-mode main {
-  background-color: #1e1e1e; /* темний фон секцій */
-  box-shadow: none;
-}
-body.dark-mode header {
-  background: #0b0b0b; /* повністю чорний хедер */
-}
-body.dark-mode nav a {
-  color: #dcdcdc;
-  transition: color 0.6s ease;
-}
-body.dark-mode nav a:hover {
-  color: #8e44ad;
-}
-body.dark-mode hr {
-  background-color: #444444;
-}
-body.dark-mode .section:nth-of-type(odd) {
-  background-color: #1a1a1a;
-}
-body.dark-mode .section h2 {
-  color: #eceff4;
-}
-body.dark-mode .section h2::before {
-  background-color: #5dade2;
-}
-body.dark-mode .section ul li {
-  color: #eceff4;
-}
-body.dark-mode .section ul li::before {
-  color: #5dade2;
-}
-body.dark-mode .project-card {
-  background-color: #1a1a1a;
-  border-left-color: #5dade2;
-  box-shadow: none;
-}
-body.dark-mode .project-card:hover {
-  border-color: #85c1e9;
-  box-shadow: none;
-}
-body.dark-mode .project-card h3,
-body.dark-mode .project-card p,
-body.dark-mode .project-card ul li {
-  color: #dcdcdc;
-}
-body.dark-mode .email-button {
-  background-color: #2ecc71;
-}
-body.dark-mode .email-button:hover {
-  background-color: #27ae60;
-}
-body.dark-mode .contact-button {
-  background-color: #5dade2;
-}
-body.dark-mode .contact-button:hover {
-  background-color: #3498db;
-}
-body.dark-mode .languages li {
-  background-color: #1a1a1a;
-  box-shadow: none;
-}
-body.dark-mode .languages li:hover {
-  background-color: #27334a;
-}
-body.dark-mode footer {
-  background: #0b0b0b;
-  color: #7f8c8d;
-  box-shadow: none;
-}
-body.dark-mode .footer-info {
-  color: #7f8c8d;
-}
-body.dark-mode .comment-item {
-  background-color: #1a1a1a;
-  color: #dcdcdc;
-  box-shadow: none;
-}
-body.dark-mode .comment-item:nth-child(odd) {
-  background-color: #111111;
-}
-
-/* ===================== АДАПТИВНІ НАСТРОЮВАННЯ ===================== */
-
-/* 1. Зменшення базового розміру шрифту на дуже вузьких екранах */
-@media (max-width: 480px) {
-  html {
-    font-size: 90%;    /* 1rem ≈ 14.4px */
-  }
-}
-
-/* 2. Адаптивна навігація (header) */
+/* 1. ЗАГАЛЬНІ ПРАВИЛА ДЛЯ ЕКРАНІВ ≤ 768px */
 @media (max-width: 768px) {
+
+  /* 1.1. ПЕРЕРОБКА HEADER: вертикальна навігація, збільшені кнопки */
+  header {
+    padding: 12px 16px; 
+  }
   .header-container {
     flex-direction: column;
-    padding: 16px 16px 8px;
+    align-items: flex-start;   /* лого ліворуч, а під ним меню вертикально */
+    gap: 12px;
   }
   header h1 {
-    font-size: 1.8rem;    /* трохи збільшили для кращої читабельності */
+    font-size: 1.8rem;          /* трохи більший для читабельності */
+    margin-bottom: 8px;
   }
   nav ul {
     flex-direction: column;
-    gap: 16px;            /* збільшили gap, щоб меню не злипалося */
-    align-items: center;
-    margin-top: 12px;
+    gap: 16px;                  /* збільшуємо відстань між пунктами */
+    width: 100%;
+  }
+  nav li {
+    width: 100%;
   }
   nav a {
-    font-size: 1.1rem;    /* крупніший текст у меню */
-    padding: 4px 8px;     /* невеликі відступи для зручнішого натискання */
+    display: block;             /* робимо всю ширину натискальною зоною */
+    padding: 12px 16px;         /* великий padding для пальця */
+    font-size: 1.2rem;          /* збільшуємо текст пунктів меню */
+    border-radius: 4px;
+    transition: background-color 0.4s ease, transform 0.4s ease;
   }
-  #theme-toggle {
-    margin-top: 12px;
-    font-size: 1.8rem;    /* трохи більша іконка */
+  nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: none;            /* прибираємо зсув, залишаємо лише підсвічування */
   }
-}
 
-/* 3. Адаптив для main та секцій */
-@media (max-width: 768px) {
+  /* 1.2. ЗБІЛЬШЕННЯ КНОПКИ “Scroll to Top” */
+  .scroll-top-btn {
+    width: 60px;                /* збільшуємо діаметр */
+    height: 60px;
+    font-size: 1.8rem;          /* більший значок стрілки */
+    bottom: 80px;               /* піднімаємо вище над футером */
+    right: 16px;
+  }
+  .scroll-top-btn.visible {
+    opacity: 0.9;               /* трохи прозорості, щоб не закривати контент */
+    transform: translateY(0);
+  }
+
+  /* 1.3. ЗБІЛЬШЕННЯ КНОПКИ “Приховати/Показати інфо” */
+  .toggle-info-btn {
+    bottom: 150px;              /* переносимо вище, щоб не заважати футеру */
+    left: 16px;
+    padding: 12px 20px;         /* збільшуємо padding для пальців */
+    font-size: 1.1rem;          /* трохи більший текст */
+  }
+  .toggle-info-btn:hover {
+    transform: none;            /* убираємо перекочування, робимо лише легке підсвічування */
+  }
+
+  /* 1.4. Головний контейнер (main) */
   main {
     width: 100%;
     max-width: none;
-    padding: 100px 12px 60px;
+    padding: 100px 12px 80px;   /* достатньо простору зверху/знизу */
     border-radius: 0;
     box-shadow: none;
   }
+
+  /* 1.5. СЕКЦІЇ КОНТЕНТУ: зменшуємо зайві відступи, шрифти «під пальці» */
   .section {
-    padding: 20px 0;
+    padding: 24px 0;
   }
   .content-wrapper {
     padding: 0 16px;
-    max-width: 100%;
   }
   .section h2 {
-    font-size: 1.6rem;    /* збільшили заголовки секцій */
+    font-size: 1.6rem;          /* зменшено з 1.8rem до 1.6rem */
     padding-left: 12px;
   }
-  /* “Про себе” */
+  .section ul li {
+    font-size: 1rem;            /* трішки збільшуємо з 0.95rem на максимальний комфорт */
+    padding-left: 24px;
+    margin-bottom: 14px;        /* трохи більший відступ між пунктами */
+  }
+
+  /* 1.6. СЕКЦІЯ “Про себе”: текст більш компактний */
   #about {
     padding: 20px 16px;
   }
   #about .content-wrapper {
-    gap: 10px;
+    gap: 12px;
   }
   #about .content-wrapper p:nth-of-type(1) {
-    font-size: 1.2rem;
+    font-size: 1.3rem;          /* трохи збільшили для читабельності */
+  }
+  #about .content-wrapper p:nth-of-type(2),
+  #about .content-wrapper p:nth-of-type(3) {
+    font-size: 1.05rem;
+  }
+  #about .content-wrapper p:nth-of-type(4) {
+    font-size: 0.95rem;
+    max-width: 90%;
+  }
+
+  /* 1.7. КАРТИ ПРОЕКТІВ: одноколоночно, полегшені відступи */
+  .project-grid {
+    display: block;
+    padding: 0 12px;
+  }
+  .project-card {
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 16px;              /* достатньо padding, але не надто багато */
+  }
+  .project-card h3 {
+    font-size: 1.3rem;
+  }
+  .project-card p,
+  .project-card ul li {
+    font-size: 1rem;
+  }
+
+  /* 1.8. КОМЕНТАРІ: зменшений шрифт, збільшені відступи */
+  .comments-list {
+    padding: 0 12px;
+  }
+  .comment-item {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* 1.9. КНОПКИ ФОРМ ТА EMAIL: достатньо великі для натискання */
+  .email-button,
+  .submit-btn,
+  .contact-button {
+    padding: 14px 28px;         /* більший padding для пальця */
+    font-size: 1.05rem;
+  }
+}
+
+/* 2. ПОДАЛЬШІ ЗМІНИ ДЛЯ ЕКРАНІВ ≤ 480px */
+@media (max-width: 480px) {
+
+  /* 2.1. ЩЕ БІЛЬШІ КНОПКИ У HEADER */
+  nav a {
+    font-size: 1.15rem;         /* злегка більший текст, щоб умістити коротке слово */
+    padding: 14px 16px;         /* трохи більше padding по вертикалі */
+  }
+
+  /* 2.2. ПІДТЯГУВАННЯ ШРИФТІВ У СЕКЦІЯХ */
+  .section h2 {
+    font-size: 1.5rem;          /* заголовки трошки зменшили для вузьких екранів */
+  }
+  .section ul li {
+    font-size: 0.98rem;
+    padding-left: 20px;
+  }
+
+  /* 2.3. “Про себе” – ще компактніше */
+  #about .content-wrapper p:nth-of-type(1) {
+    font-size: 1.25rem;
   }
   #about .content-wrapper p:nth-of-type(2),
   #about .content-wrapper p:nth-of-type(3) {
@@ -739,134 +170,71 @@ body.dark-mode .comment-item:nth-child(odd) {
   }
   #about .content-wrapper p:nth-of-type(4) {
     font-size: 0.9rem;
-    max-width: 90%;
   }
-  /* Списки */
-  .section ul li {
-    font-size: 1rem;     /* трохи більший, але не занадто */
-    padding-left: 24px;
-  }
-  .section ul li::before {
-    font-size: 1.3rem;
-  }
-  /* Проєкти */
-  .project-grid {
-    display: block;
-    padding: 0 12px;
-  }
+
+  /* 2.4. КАРТИ ПРОЕКТІВ: трохи збільшуємо вертикальний відступ */
   .project-card {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 16px;       /* трохи зменшили padding */
+    margin-bottom: 28px;
   }
-  .project-card h3 {
-    font-size: 1.2rem;   /* трохи зменшили заголовок проєкту */
-  }
-  .project-card p,
-  .project-card ul li {
-    font-size: 0.95rem;  /* трохи зменшили контент проєкту */
-  }
-  /* Коментарі */
-  #comments .content-wrapper {
-    padding: 0 12px;
-  }
-  .comments-list {
-    padding: 0;
-  }
+
+  /* 2.5. КОМЕНТАРІ: трохи менший паддінг */
   .comment-item {
-    padding: 10px 12px;
-    font-size: 0.9rem;   /* зменшили текст у коментарях */
-  }
-  /* Footer та кнопки */
-  footer {
-    padding: 8px 12px 4px;
-  }
-  .footer-brand {
-    font-size: 0.75rem;
-  }
-  .toggle-info-btn {
-    bottom: 120px;       /* підняли вище над футером */
-    left: 16px;
-    padding: 8px 14px;
+    padding: 10px 14px;
     font-size: 0.9rem;
   }
-  .scroll-top-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 1.3rem;
-    bottom: 16px;
-    right: 16px;
-  }
-}
 
-/* 4. Ще компактніше для екранів ≤ 480px */
-@media (max-width: 480px) {
-  footer {
-    padding: 6px 8px 2px;
+  /* 2.6. КНОПКИ ФОРМ ТА EMAIL: невеличке зменшення, щоб пасувало */
+  .email-button,
+  .submit-btn,
+  .contact-button {
+    padding: 12px 24px;
+    font-size: 1rem;
   }
-  .footer-brand {
-    font-size: 0.7rem;
-  }
+
+  /* 2.7. ПЕРЕМІЩУЄМО КНОПКИ ЩЕ ВИЩЕ */
   .toggle-info-btn {
-    bottom: 120px;
+    bottom: 160px;              /* переносимо трохи вище, щоб не накладатися на більший content */
     left: 12px;
-    padding: 8px 12px;
-    font-size: 0.85rem;
+    padding: 10px 18px;
+    font-size: 1rem;
   }
   .scroll-top-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
-    bottom: 12px;
+    width: 56px;
+    height: 56px;
+    font-size: 1.6rem;
+    bottom: 80px;
     right: 12px;
   }
-  nav ul {
-    gap: 12px;            /* ще більший відступ між пунктами меню */
-  }
-  nav a {
-    font-size: 1rem;      /* трохи зменшили, але залишили зручним для натискання */
-  }
-  header h1 {
-    font-size: 1.6rem;    /* зменшили заголовок для вузьких екранів */
-  }
 }
 
-/* 5. Полегшення читання довгих блоків */
-@media (max-width: 600px) {
-  .project-card,
-  .comment-item,
-  .about-text p,
-  .section ul li {
-    line-height: 1.6;
-  }
-}
-
-/* 6. Зменшення тіней на мобільних */
+/* 3. ВИКЛЮЧЕННЯ ТІНЕЙ ДЛЯ МОБІЛЬНИХ, ЩОБ БУЛО ЛЕГШЕ */
 @media (max-width: 600px) {
   .project-card {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: none;
   }
   .comment-item {
-    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    box-shadow: none;
   }
 }
 
-/* 7. Touch feedback (легке масштабування при натисканні) */
-@media (hover: none) and (pointer: coarse) {
-  .email-button,
-  .toggle-info-btn,
-  .scroll-top-btn,
-  #theme-toggle,
-  .contact-button,
-  .submit-btn {
-    transition: transform 0.15s ease, background-color 0.15s ease;
+/* 4. ЗБЕРЕЖЕННЯ FLOSS-BREAKPOINTS ДЛЯ 1024px, якщо потрібно */
+@media (max-width: 1024px) {
+  /* Можливі додаткові налаштування для планшетів */
+  header h1 {
+    font-size: 1.9rem;
   }
-  .email-button:active,
-  .toggle-info-btn:active,
-  .scroll-top-btn:active,
-  #theme-toggle:active,
-  .contact-button:active,
-  .submit-btn:active {
-    transform: scale(0.96);
+  nav a {
+    font-size: 1.15rem;
+    padding: 10px 12px;
+  }
+  .toggle-info-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
+  }
+  .email-button,
+  .submit-btn,
+  .contact-button {
+    padding: 13px 26px;
+    font-size: 1.02rem;
   }
 }
