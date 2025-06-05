@@ -1,27 +1,42 @@
-const VARIANT_NUMBER = 32;
+// ========== script.js ==========
+
+// Встановіть свій номер варіанту:
+const VARIANT_NUMBER = 32; // Замініть 1 на свій номер варіанту
 
 document.addEventListener('DOMContentLoaded', () => {
-  storeUserInfo();          // 1. Зберігаання ОС/браузер у localStorage
-  displayStoredUserInfo();  // 2. Відображаення данмх у футері
-  fetchComments();          // 3. Завантаження та відображаємо коментарі
-  scheduleFeedbackModal();  // 4. Показ модалки через 60 секунд
-  setupThemeToggle();       // 5. Перемикач теми (день/ніч)
-  applyAutoTheme();         // 6. Автоматичне перемикання теми за часом
-  setupInfoToggle();        // 7. Кнопка «Приховати/Показати інфо»
-  setupScrollTopButton();   // 8. Кнопка «Scroll to Top»
-  setupScrollColorShift();  // 9. Зміна фону при скролі
-});
-const emailBtn = document.getElementById('email-button');
-  if (emailBtn) {
-    emailBtn.addEventListener('click', () => {
-      window.location.href = 'mailto:artur.shmaltel.kb.2022@lpnu.ua';
-    });
-  }
+  // 1. Зберігаємо дані про ОС/браузер у localStorage
+  storeUserInfo();
 
+  // 2. Відображаємо дані у футері
+  displayStoredUserInfo();
+
+  // 3. Завантажуємо та відображаємо коментарі
+  fetchComments();
+
+  // 4. Показ модалки через 60 секунд
+  scheduleFeedbackModal();
+
+  // 5. Перемикач теми (день/ніч)
+  setupThemeToggle();
+
+  // 6. Автоматичне перемикання теми за часом
+  applyAutoTheme();
+
+  // 7. Кнопка «Показати/Сховати інфо»
+  setupInfoToggle();
+
+  // 8. Кнопка «Scroll to Top»
+  setupScrollTopButton();
+
+  // 9. Гамбургер-меню (мобільний режим)
+  setupMobileMenu();
+});
+
+// ========== 1. Зберігання даних у браузері ==========
 function storeUserInfo() {
   const userAgent = navigator.userAgent;
-  const platform = navigator.platform;
-  const language = navigator.language || navigator.userLanguage;
+  const platform  = navigator.platform;
+  const language  = navigator.language || navigator.userLanguage;
   const screenSize = `${screen.width}×${screen.height}`;
   const timestamp = new Date().toLocaleString();
 
@@ -48,6 +63,7 @@ function displayStoredUserInfo() {
   `;
 }
 
+// ========== 2. Завантаження та відображення коментарів ==========
 function fetchComments() {
   const url = `https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`;
   fetch(url)
@@ -60,7 +76,7 @@ function fetchComments() {
       comments.forEach((comment, idx) => {
         const li = document.createElement('li');
         li.classList.add('comment-item');
-        // Задаємо відкладення анімації для кожного коментаря
+        // Відкладення анімації для кожного коментаря
         li.style.animationDelay = `${1.2 + idx * 0.2}s`;
         li.innerHTML = `
           <p><strong>${escapeHTML(comment.name)}</strong> (${escapeHTML(comment.email)})</p>
@@ -81,6 +97,7 @@ function escapeHTML(str) {
   }[tag]));
 }
 
+// ========== 3. Модальне вікно з формою ==========
 function scheduleFeedbackModal() {
   setTimeout(showFeedbackModal, 60000); // 60 секунд
 }
@@ -127,40 +144,47 @@ function loadThemePreference() {
   }
 }
 
+// ========== 5. Кнопка «Показати/Сховати інфо» ==========
 function setupInfoToggle() {
-  const btn = document.getElementById('toggle-info-btn');
+  const btn     = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
-  const icon = document.getElementById('toggle-icon');
-  const text = document.getElementById('toggle-text');
+  const icon    = document.getElementById('toggle-icon');
+  const text    = document.getElementById('toggle-text');
 
-  let visible = false; 
+  let visible = false; // спочатку панель прихована => текст "Показати інфо"
+  text.textContent = 'Показати інфо';
 
   btn.addEventListener('click', () => {
     visible = !visible;
 
-    btn.classList.add('rotate');
-    setTimeout(() => btn.classList.remove('rotate'), 600);
+    // перевертаємо трикутник
+    btn.classList.toggle('info-open');
 
     if (visible) {
       infoDiv.classList.add('visible');
       icon.textContent = '▲';
-      text.textContent = 'Приховати інфо';
+      text.textContent = 'Сховати інфо';
     } else {
       infoDiv.classList.remove('visible');
       icon.textContent = '▼';
       text.textContent = 'Показати інфо';
     }
+
+    // якщо відкрито інфо, автоматично сховаємо мобільне меню (якщо воно було)
+    document.querySelector('header').classList.remove('menu-open');
+    document.getElementById('mobile-menu-btn').classList.remove('opened');
   });
-} 
+}
 
 
+// ========== 6. Кнопка «Scroll to Top» ==========
 function setupScrollTopButton() {
   const btn = document.getElementById('scroll-top-btn');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 400) {
-      btn.classList.add('visible'); // показати плавно
+      btn.classList.add('visible');
     } else {
-      btn.classList.remove('visible'); // сховати плавно
+      btn.classList.remove('visible');
     }
   });
 
@@ -169,22 +193,33 @@ function setupScrollTopButton() {
   });
 }
 
+// ========== 7. Гамбургер-меню (мобільний режим) ==========
+function setupMobileMenu() {
+  const header        = document.querySelector('header');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const themeToggleBtn = document.getElementById('theme-toggle');
 
-function setupScrollColorShift() {
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY || window.pageYOffset;
-    const docHeight = document.body.scrollHeight - window.innerHeight;
-    if (docHeight <= 0) return;
-    let scrollFraction = scrollTop / docHeight;
-    if (scrollFraction > 1) scrollFraction = 1;
-    if (scrollFraction < 0) scrollFraction = 0;
+  // При кліку на гамбургер — додаємо/забираємо клас menu-open
+  mobileMenuBtn.addEventListener('click', () => {
+    const isOpen = header.classList.toggle('menu-open');
+    mobileMenuBtn.classList.toggle('opened');
+    // Сховаємо інфо за потреби:
+    document.getElementById('local-storage-info').classList.remove('visible');
+    document.getElementById('toggle-info-btn').classList.remove('info-open');
+  });
 
-    const startHue = 211;
-    const endHue   = 262;
-    const saturation = 50;
-    const lightness  = 40;
+  // Якщо користувач перемикає тему — згортаємо меню
+  themeToggleBtn.addEventListener('click', () => {
+    header.classList.remove('menu-open');
+    mobileMenuBtn.classList.remove('opened');
+  });
 
-    const currentHue = startHue + (endHue - startHue) * scrollFraction;
-    document.body.style.backgroundColor = `hsl(${currentHue.toFixed(1)}, ${saturation}%, ${lightness}%)`;
+  // Якщо клік по пункту меню — ховаємо навігацію
+  const navLinks = header.querySelectorAll('nav a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      header.classList.remove('menu-open');
+      mobileMenuBtn.classList.remove('opened');
+    });
   });
 }

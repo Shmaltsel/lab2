@@ -9,23 +9,30 @@
 <body>
   <!-- ===== Фіксований Header з навігацією та перемикачем теми ===== -->
   <header>
-    <div class="header-container">
-      <div class="logo">
-        <h1>Шмальцель Артур</h1>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#about">Про себе</a></li>
-          <li><a href="#education">Освіта</a></li>
-          <li><a href="#experience">Досвід</a></li>
-          <li><a href="#skills">Навички</a></li>
-          <li><a href="#projects">Проєкти</a></li>
-          <li><a href="#contact">Контакти</a></li>
-        </ul>
-      </nav>
-      <button id="theme-toggle" aria-label="Перемкнути тему">🌗</button>
-    </div>
-  </header>
+  <div class="header-container">
+    <h1>Шмальцель Артур</h1>
+
+    <!-- 1) Кнопка «гамбургер» (показується лише на мобільних) -->
+    <button id="mobile-menu-btn" aria-label="Відкрити меню">
+      ☰
+    </button>
+
+    <nav>
+      <ul>
+        <li><a href="#about">Про себе</a></li>
+        <li><a href="#education">Освіта</a></li>
+        <li><a href="#experience">Досвід</a></li>
+        <li><a href="#skills">Навички</a></li>
+        <li><a href="#projects">Проекти</a></li>
+        <li><a href="#contact">Контакти</a></li>
+      </ul>
+    </nav>
+
+    <!-- 3) Кнопка перемикання теми (залишаємо без змін) -->
+    <button id="theme-toggle">🌗</button>
+  </div>
+</header>
+
 
   <!-- ===== Основний контент ===== -->
   <main>

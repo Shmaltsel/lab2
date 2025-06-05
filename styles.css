@@ -1,9 +1,19 @@
+/* ==========================================================================
+   Повний структурований файл стилів (styles.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Анімація градієнтного фону
+   ========================================================================== */
 @keyframes gradientBackground {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* ==========================================================================
+   2. Базові налаштування
+   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -11,7 +21,7 @@
 }
 
 html {
-  font-size: 100%;
+  font-size: 100%;       /* 1rem = 16px */
   line-height: 1.5;
   scroll-behavior: smooth;
 }
@@ -27,6 +37,9 @@ body {
   transition: background-color 0.3s ease;
 }
 
+/* ==========================================================================
+   3. Фіксований Header
+   ========================================================================== */
 header {
   position: fixed;
   top: 0;
@@ -41,21 +54,75 @@ header {
 }
 
 .header-container {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 40px;            /* відстань між заголовком, навігацією і кнопкою теми */
+  justify-content: center;   /* сам grid-рядок вирівняний по центру всередині header */
+  align-items: center;       /* по вертикалі усе на одному рівні */
+  padding: 16px 20px;        /* ваші звичні відступи зверху/знизу */
 }
 
-header h1 {
-  margin: 0;
+/* ==========================================================================
+   3.1. Заголовок. Центруємо H1 незалежно від кнопок
+   ========================================================================== */
+.header-container h1 {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
+/* ==========================================================================
+   3.2. Гамбургер-кнопка (зліва під час мобільного режиму)
+   ========================================================================== */
+#mobile-menu-btn {
+  display: none;                /* на десктопі невидима */
+  background: none;
+  border: none;
+  font-size: 2rem;              /* великий символ «☰» */
+  color: #ecf0f1;
+  cursor: pointer;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: 1100;
+}
+#mobile-menu-btn:hover {
+  color: #f1c40f;
+}
+#mobile-menu-btn.opened {
+  transform: translateY(-50%) rotate(90deg);
+  color: #f1c40f;
+}
+
+/* ==========================================================================
+   3.3. Кнопка перемикання теми (праворуч під час мобільного режиму)
+   ========================================================================== */
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #ecf0f1;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.6s ease, transform 0.6s ease;
+  z-index: 1100;
+}
+#theme-toggle:hover {
+  transform: translateY(-50%) scale(1.2);
+  color: #f1c40f;
+}
+
+/* ==========================================================================
+   3.4. Навігація (desktop-версія)
+   ========================================================================== */
+nav {
+  display: block;
+}
 nav ul {
   list-style: none;
   margin: 0;
@@ -63,13 +130,12 @@ nav ul {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
+  justify-content: center; /* центруємо пункти навігації */
 }
-
 nav li {
   margin: 0;
   padding: 0;
 }
-
 nav a {
   color: #ecf0f1;
   text-decoration: none;
@@ -77,11 +143,9 @@ nav a {
   position: relative;
   transition: color 0.6s ease, transform 0.6s ease;
 }
-
 nav a:hover {
   transform: translateY(-2px);
 }
-
 nav a::after {
   content: "";
   position: absolute;
@@ -92,25 +156,18 @@ nav a::after {
   background-color: #ecf0f1;
   transition: width 0.6s ease;
 }
-
 nav a:hover::after {
   width: 100%;
 }
 
-#theme-toggle {
-  background: none;
-  border: none;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #ecf0f1;
-  transition: color 0.6s ease, transform 0.6s ease;
-}
+/* ==========================================================================
+   4. Кнопка перемикання теми
+   ========================================================================== */
+/* (Стилі залишилися вище у розділі 3.3) */
 
-#theme-toggle:hover {
-  transform: scale(1.2);
-  color: #f1c40f;
-}
-
+/* ==========================================================================
+   5. Фіксований Footer
+   ========================================================================== */
 footer {
   position: fixed;
   bottom: 0;
@@ -120,12 +177,22 @@ footer {
   backdrop-filter: blur(8px);
   color: #bdc3c7;
   text-align: center;
-  padding: 12px 0 4px;
+  padding: 12px 0 40px;  /* додано місця для кнопок над футером */
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
   user-select: none;
   transition: background 0.8s ease, color 0.8s ease;
 }
 
+.footer-brand {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #ecf0f1;
+  user-select: none;
+}
+
+/* ==========================================================================
+   5.1. Блок з інформацією (footer-info)
+   ========================================================================== */
 .footer-info {
   text-align: left;
   max-width: 900px;
@@ -136,65 +203,122 @@ footer {
   opacity: 0;
   transition: max-height 0.6s ease, opacity 0.6s ease;
 }
-
 .footer-info.visible {
   max-height: 500px;
   opacity: 1;
 }
 
-.footer-brand {
-  margin-top: 6px;
-  font-size: 0.9rem;
-  color: #ecf0f1;
-}
-
+/* ==========================================================================
+   6. Кнопка «Показати/Сховати інфо»
+   ========================================================================== */
 .toggle-info-btn {
   position: fixed;
-  bottom: 80px;
-  left: 20px;
+  bottom: 16px;
+  left: 16px;
   background-color: #3498db;
   color: #ffffff;
   border: none;
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 24px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: background-color 0.6s ease, transform 0.6s ease;
   user-select: none;
-  z-index: 1000;
+  z-index: 2000;
 }
-
 .toggle-info-btn:hover {
   background-color: #2980b9;
-  transform: translateY(-2px);
 }
 
-@keyframes rotateIcon {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
+/* ==========================================================================
+   6.1. На мобільних «Показати/Сховати інфо» перетворюється на круглу іконку
+   ========================================================================== */
+   /* === 1. Переконайтеся, що span з текстом завжди видимий у десктопі === */
+#toggle-text {
+  display: inline; /* або inline-block—як було спочатку */
+  font-size: 0.95rem; /* ваш початковий розмір тексту */
+  margin-left: 6px;   /* трохи проміжку між іконкою та текстом */
 }
 
-.toggle-info-btn.rotate #toggle-icon {
-  animation: rotateIcon 0.6s ease;
+/* === 2. Створюємо плавний перехід для іконки «▼» у десктопі === */
+#toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
+/* === 3. При наявності класу .info-open перевертаємо іконку === */
+.toggle-info-btn.info-open #toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* === 4. У десктопі кнопка за замовчуванням—прямокутна, з текстом === */
+.toggle-info-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  padding: 8px 14px;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  background-color: #3498db;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.toggle-info-btn:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+  .toggle-info-btn {
+    font-size: 0;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 64px;    /* вирівнювання над футером */
+    left: 16px;      /* лівий край екрану + 16px відступ */
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+  }
+  .toggle-info-btn::before {
+    content: "▼";
+    font-size: 1.2rem;
+    color: #ffffff;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .toggle-info-btn.info-open::before {
+    transform: rotate(180deg);
+  }
+}
+
+/* ==========================================================================
+   7. Плаваюча кнопка «Scroll to Top»
+   ========================================================================== */
 .scroll-top-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 16px;
+  right: 16px;
+  left: auto;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
   background-color: #3498db;
   color: #ffffff;
   border: none;
-  width: 48px;
-  height: 48px;
   border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease;
@@ -207,12 +331,39 @@ footer {
   transform: translateY(0);
   pointer-events: auto;
 }
-
 .scroll-top-btn:hover {
   background-color: #2980b9;
   transform: translateY(0) scale(1.1);
 }
 
+/* ==========================================================================
+   7.1. Адаптація «Scroll to Top» на мобільних: пересуваємо праворуч над футером
+   ========================================================================== */
+@media (max-width: 768px) {
+  .header-container h1 {
+    font-size: 1.6rem;
+  }
+  .scroll-top-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+    bottom: 64px;   /* вирівнювання над футером (симетрично toggle-info) */
+    right: 16px;    /* правий край екрану + 16px відступ */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .scroll-top-btn.visible {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+  .scroll-top-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+  }
+}
+
+/* ==========================================================================
+   8. Основний контент
+   ========================================================================== */
 main {
   width: 100%;
   max-width: 900px;
@@ -225,6 +376,9 @@ main {
   transition: background-color 0.8s ease, color 0.8s ease;
 }
 
+/* ==========================================================================
+   9. Роздільники
+   ========================================================================== */
 hr {
   border: none;
   height: 2px;
@@ -236,6 +390,9 @@ hr {
   transition: background-color 0.8s ease;
 }
 
+/* ==========================================================================
+  10. Секції (fadeInUp при завантаженні)
+   ========================================================================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -246,12 +403,10 @@ hr {
     transform: translateY(0);
   }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 .section {
   padding: 30px 0;
   user-select: none;
@@ -260,7 +415,7 @@ hr {
   transform: translateY(20px);
   animation: fadeInUp 1s ease forwards;
 }
-
+/* Затримки для секцій */
 .section:nth-of-type(1) { animation-delay: 0.2s; }
 .section:nth-of-type(2) { animation-delay: 0.4s; }
 .section:nth-of-type(3) { animation-delay: 0.6s; }
@@ -279,6 +434,7 @@ hr {
   margin: 0 auto;
 }
 
+/* Заголовок секції */
 .section h2 {
   margin-bottom: 16px;
   font-size: 1.8rem;
@@ -287,7 +443,6 @@ hr {
   padding-left: 16px;
   transition: color 0.8s ease;
 }
-
 .section h2::before {
   content: "";
   position: absolute;
@@ -300,12 +455,14 @@ hr {
   transition: background-color 0.8s ease;
 }
 
+/* ==========================================================================
+  11. Списки
+   ========================================================================== */
 .section ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
 .section ul li {
   position: relative;
   padding-left: 28px;
@@ -314,7 +471,6 @@ hr {
   transition: color 0.5s ease;
   font-size: 1rem;
 }
-
 .section ul li::before {
   content: "•";
   position: absolute;
@@ -326,17 +482,18 @@ hr {
   transform: translateY(2px);
   transition: color 0.8s ease;
 }
-
 .section ul li:hover {
   color: #2980b9;
 }
 
+/* ==========================================================================
+  12. Проєкти
+   ========================================================================== */
 .project-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
 }
-
 .project-card {
   flex: 1 1 calc(30% - 24px);
   background-color: #ffffff;
@@ -352,32 +509,27 @@ hr {
     color 0.8s ease;
   user-select: none;
 }
-
 .project-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   border-color: #2980b9;
 }
-
 .project-card h3 {
   margin-top: 0;
   font-size: 1.3rem;
   color: #2c3e50;
   transition: color 0.8s ease;
 }
-
 .project-card p {
   margin: 8px 0;
   color: #4b6a87;
   transition: color 0.8s ease;
 }
-
 .project-card ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
 .project-card ul li {
   position: relative;
   padding-left: 28px;
@@ -385,7 +537,6 @@ hr {
   color: #34495e;
   transition: color 0.5s ease;
 }
-
 .project-card ul li::before {
   content: "►";
   position: absolute;
@@ -397,11 +548,13 @@ hr {
   transform: translateY(1px);
   transition: color 0.8s ease;
 }
-
 .project-card ul li:hover {
   color: #2980b9;
 }
 
+/* ==========================================================================
+  13. Кнопка Email
+   ========================================================================== */
 .email-button {
   background-color: #8e44ad;
   color: #ffffff;
@@ -415,13 +568,15 @@ hr {
   transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   user-select: none;
 }
-
 .email-button:hover {
   background-color: #9b59b6;
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* ==========================================================================
+  14. Кнопка «Відправити» у модальному вікні
+   ========================================================================== */
 .submit-btn {
   margin-top: 16px;
   background-color: #2980b9;
@@ -434,12 +589,14 @@ hr {
   transition: background-color 0.4s ease, transform 0.4s ease;
   user-select: none;
 }
-
 .submit-btn:hover {
   background-color: #1f5f8b;
   transform: translateY(-3px) scale(1.03);
 }
 
+/* ==========================================================================
+  15. Кнопка «Зв’язатися» (контакти)
+   ========================================================================== */
 .contact-button {
   display: inline-block;
   margin-top: 12px;
@@ -452,18 +609,19 @@ hr {
   transition: background-color 0.4s ease, transform 0.4s ease;
   user-select: none;
 }
-
 .contact-button:hover {
   background-color: #1f5f8b;
   transform: translateY(-3px) scale(1.02);
 }
 
+/* ==========================================================================
+  16. Розділ «Мови»
+   ========================================================================== */
 .languages {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
-
 .languages li {
   flex: 1 1 calc(45% - 20px);
   background-color: #ffffff;
@@ -473,13 +631,11 @@ hr {
   transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.8s ease, color 0.8s ease;
   user-select: none;
 }
-
 .languages li:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
   background-color: #f0f8ff;
 }
-
 .languages li::before {
   content: "";
   display: inline-block;
@@ -490,10 +646,16 @@ hr {
   margin-right: 10px;
 }
 
+/* ==========================================================================
+  17. Додаткова інформація
+   ========================================================================== */
 .additional li {
   margin-bottom: 10px;
 }
 
+/* ==========================================================================
+  18. Модальне вікно
+   ========================================================================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -507,12 +669,10 @@ hr {
   z-index: 2000;
   transition: opacity 0.4s ease;
 }
-
 .modal-overlay.visible {
   display: flex;
   opacity: 1;
 }
-
 .modal-content {
   background-color: #ffffff;
   padding: 24px 30px;
@@ -526,11 +686,9 @@ hr {
   transform: translateY(-20px);
   animation: modalSlideDown 0.5s ease forwards;
 }
-
 @keyframes modalSlideDown {
   to { transform: translateY(0); }
 }
-
 .modal-close {
   position: absolute;
   top: 8px;
@@ -542,18 +700,15 @@ hr {
   color: #555;
   transition: color 0.3s ease;
 }
-
 .modal-close:hover {
   color: #c0392b;
 }
-
 .modal-content h2 {
   margin-top: 0;
   font-size: 1.5rem;
   color: #2c3e50;
   transition: color 0.8s ease;
 }
-
 .modal-content label {
   display: block;
   margin-top: 12px;
@@ -561,7 +716,6 @@ hr {
   color: #34495e;
   transition: color 0.8s ease;
 }
-
 .modal-content input,
 .modal-content textarea {
   width: 100%;
@@ -574,12 +728,14 @@ hr {
   transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
 }
 
+/* ==========================================================================
+  19. Коментарі
+   ========================================================================== */
 .comments-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
 .comment-item {
   background-color: #ffffff;
   padding: 12px 16px;
@@ -591,182 +747,223 @@ hr {
   opacity: 0;
   animation: fadeIn 1s ease forwards;
 }
-
 .comment-item:nth-child(1) { animation-delay: 1.2s; }
 .comment-item:nth-child(2) { animation-delay: 1.4s; }
 .comment-item:nth-child(3) { animation-delay: 1.6s; }
-
 .comment-item:nth-of-type(odd) {
   background-color: #f0f8ff;
 }
-
 .comment-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* ==========================================================================
+  20. Темна тема (чорний фон)
+   ========================================================================== */
 body.dark-mode {
   background-color: #000000;
   color: #dcdcdc;
 }
-
 body.dark-mode main {
   background-color: #1e1e1e;
   box-shadow: none;
 }
-
 body.dark-mode header {
   background: #0b0b0b;
 }
-
 body.dark-mode nav a {
   color: #dcdcdc;
   transition: color 0.6s ease;
 }
-
 body.dark-mode nav a:hover {
   color: #8e44ad;
 }
-
 body.dark-mode hr {
   background-color: #444444;
 }
-
 body.dark-mode .section:nth-of-type(odd) {
   background-color: #1a1a1a;
 }
-
 body.dark-mode .section h2 {
   color: #eceff4;
 }
-
 body.dark-mode .section h2::before {
   background-color: #5dade2;
 }
-
 body.dark-mode .section ul li {
   color: #eceff4;
 }
-
 body.dark-mode .section ul li::before {
   color: #5dade2;
 }
-
 body.dark-mode .project-card {
   background-color: #1a1a1a;
   border-left-color: #5dade2;
   box-shadow: none;
 }
-
 body.dark-mode .project-card:hover {
   border-color: #85c1e9;
   box-shadow: none;
 }
-
 body.dark-mode .project-card h3,
 body.dark-mode .project-card p,
 body.dark-mode .project-card ul li {
   color: #dcdcdc;
 }
-
 body.dark-mode .email-button {
   background-color: #2ecc71;
 }
-
 body.dark-mode .email-button:hover {
   background-color: #27ae60;
 }
-
 body.dark-mode .contact-button {
   background-color: #5dade2;
 }
-
 body.dark-mode .contact-button:hover {
   background-color: #3498db;
 }
-
 body.dark-mode .languages li {
   background-color: #1a1a1a;
   box-shadow: none;
 }
-
 body.dark-mode .languages li:hover {
   background-color: #27334a;
 }
-
 body.dark-mode footer {
   background: #0b0b0b;
   color: #7f8c8d;
   box-shadow: none;
 }
-
 body.dark-mode .footer-info {
   color: #7f8c8d;
 }
-
 body.dark-mode .comment-item {
   background-color: #1a1a1a;
   color: #dcdcdc;
   box-shadow: none;
 }
-
 body.dark-mode .comment-item:nth-child(odd) {
   background-color: #111111;
 }
 
+/* ==========================================================================
+  21. Адаптивні налаштування для мобільних (десктоп готовий вище)
+   ========================================================================== */
+
+/* ---- 21.1. Екрани ≤ 768px: мобільний режим ---- */
 @media (max-width: 768px) {
-  header {
-    padding: 12px 16px;
+
+  /* 21.1.1. Гамбургер-меню: показуємо кнопку та приховуємо nav, додаємо анімацію розгортання */
+  #mobile-menu-btn {
+    display: block;
   }
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 200px;
+    border-radius: 4px;
   }
-  header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 8px;
+  header{
+    text-align: center;
   }
-  nav ul {
+  .menu-open nav {
+    max-height: 500px; /* достатньо для всього списку */
+    transition: max-height 0.5s ease-in;
+    background: rgba(44, 62, 80, 0.95);
+    backdrop-filter: blur(8px);
+    margin-top: 8px;
+  }
+  .menu-open nav ul {
     flex-direction: column;
     gap: 16px;
+    padding: 8px 0;
+  }
+  .menu-open nav li {
     width: 100%;
   }
-  nav li {
-    width: 100%;
-  }
-  nav a {
+  .menu-open nav a {
     display: block;
     width: 100%;
     padding: 12px 16px;
     font-size: 1.2rem;
     border-radius: 4px;
-    transition: background-color 0.4s ease, transform 0.4s ease;
+    transition: background-color 0.4s ease;
+    text-align: center;
   }
-  nav a:hover {
+  .menu-open nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    transform: none;
   }
+
+  /* 21.1.2. Заголовок: ширину не чіпаємо, але кнопки лишаються по боках */
+  /* Заголовок уже центрується абсолютним позиціонуванням */
+
+  /* 21.1.3. Кнопка «Показати/Сховати інфо» (лівий бік) */
+  .toggle-info-btn {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 64px;    /* вирівнювання над футером */
+    left: 16px;      /* відступ від лівого краю */
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3498db;
+    color: #ffffff;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+  }
+   /* Ховаємо тільки текст «Показати інфо» */
+  #toggle-text {
+    display: none;
+  }
+  /* Залишаємо лише іконку (трикутник) і збільшуємо її розмір */
+  #toggle-icon {
+    display: none;
+    font-size: 1.2rem;
+  }
+  .toggle-info-btn::before {
+    content: "▼";
+    font-size: 1.2rem;
+    color: #ffffff;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .toggle-info-btn.info-open::before {
+    transform: rotate(180deg);
+  }
+  .toggle-info-btn:hover {
+    background-color: #2980b9;
+  }
+
+
+  /* 21.1.4. Кнопка «Scroll to Top» (правий бік) */
   .scroll-top-btn {
     width: 60px;
     height: 60px;
     font-size: 1.8rem;
-    bottom: 80px;
-    right: 16px;
+    bottom: 64px;   /* вирівнювання над футером */
+    right: 16px;    /* відступ від правого краю */
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
   .scroll-top-btn.visible {
     opacity: 0.9;
     transform: translateY(0);
   }
-  .toggle-info-btn {
-    bottom: 150px;
-    left: 16px;
-    padding: 12px 20px;
-    font-size: 1.1rem;
+  .scroll-top-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
   }
-  .toggle-info-btn:hover {
-    transform: none;
-  }
+
+  /* 21.1.5. Main і секції: оптимізуємо відступи та шрифти */
   main {
     width: 100%;
     max-width: none;
@@ -789,6 +986,8 @@ body.dark-mode .comment-item:nth-child(odd) {
     padding-left: 24px;
     margin-bottom: 14px;
   }
+
+  /* 21.1.6. Секція «Про себе» */
   #about {
     padding: 20px 16px;
   }
@@ -806,6 +1005,8 @@ body.dark-mode .comment-item:nth-child(odd) {
     font-size: 0.95rem;
     max-width: 90%;
   }
+
+  /* 21.1.7. Карти проєктів */
   .project-grid {
     display: block;
     padding: 0 12px;
@@ -822,6 +1023,8 @@ body.dark-mode .comment-item:nth-child(odd) {
   .project-card ul li {
     font-size: 1rem;
   }
+
+  /* 21.1.8. Коментарі */
   .comments-list {
     padding: 0 12px;
   }
@@ -829,6 +1032,8 @@ body.dark-mode .comment-item:nth-child(odd) {
     padding: 12px 16px;
     font-size: 0.95rem;
   }
+
+  /* 21.1.9. Кнопки Email, Submit, Contact */
   .email-button,
   .submit-btn,
   .contact-button {
@@ -837,10 +1042,10 @@ body.dark-mode .comment-item:nth-child(odd) {
   }
 }
 
+/* ---- 21.2. Екрани ≤ 480px: ще дрібніші коригування ---- */
 @media (max-width: 480px) {
- .content-wrappe{
-  color: red;
- }
+
+  /* 21.2.1. Header: трохи менший заголовок і більший padding меню */
   nav a {
     font-size: 1.15rem;
     padding: 14px 16px;
@@ -848,6 +1053,8 @@ body.dark-mode .comment-item:nth-child(odd) {
   header h1 {
     font-size: 1.6rem;
   }
+
+  /* 21.2.2. Секції */
   .section h2 {
     font-size: 1.5rem;
   }
@@ -855,44 +1062,55 @@ body.dark-mode .comment-item:nth-child(odd) {
     font-size: 0.98rem;
     padding-left: 20px;
   }
+
+  /* 21.2.3. Секція «Про себе» */
   #about .content-wrapper p:nth-of-type(1) {
     font-size: 1.25rem;
   }
-  #about .content-wrapper p:nth-of-type(2),
+  #about .content-wrapper п:nth-of-type(2),
   #about .content-wrapper p:nth-of-type(3) {
     font-size: 1rem;
   }
   #about .content-wrapper p:nth-of-type(4) {
     font-size: 0.9rem;
   }
+
+  /* 21.2.4. Карти проєктів */
   .project-card {
     margin-bottom: 28px;
   }
+
+  /* 21.2.5. Коментарі */
   .comment-item {
     padding: 10px 14px;
     font-size: 0.9rem;
   }
+
+  /* 21.2.6. Кнопки Email, Submit, Contact */
   .email-button,
   .submit-btn,
   .contact-button {
     padding: 12px 24px;
     font-size: 1rem;
   }
+
+  /* 21.2.7. Розташування круглих кнопок футера */
   .toggle-info-btn {
-    bottom: 160px;
+    bottom: 40px;  /* трохи зміщуємо вниз, щоб текст «Шмальцель Артур 2025» був видно */
     left: 12px;
-    padding: 10px 18px;
-    font-size: 1rem;
+    width: 52px;
+    height: 52px;
   }
   .scroll-top-btn {
-    width: 56px;
-    height: 56px;
-    font-size: 1.6rem;
-    bottom: 80px;
+    bottom: 40px;
     right: 12px;
+    width: 52px;
+    height: 52px;
+    font-size: 1.5rem;
   }
 }
 
+/* ---- 21.3. Екрани ≤ 600px: виключення тіней ---- */
 @media (max-width: 600px) {
   .project-card {
     box-shadow: none;
@@ -902,6 +1120,7 @@ body.dark-mode .comment-item:nth-child(odd) {
   }
 }
 
+/* ---- 21.4. Екрани ≤ 1024px (планшети): коригування шрифтів і кнопок ---- */
 @media (max-width: 1024px) {
   header h1 {
     font-size: 1.9rem;
@@ -921,3 +1140,15 @@ body.dark-mode .comment-item:nth-child(odd) {
     font-size: 1.02rem;
   }
 }
+
+/* ==========================================================================
+   22. Плавні переходи для всіх інтерактивних елементів
+   ========================================================================== */
+button,
+nav a {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ==========================================================================
+   Кінець файлу styles.css
+   ========================================================================== */
