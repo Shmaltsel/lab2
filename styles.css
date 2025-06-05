@@ -264,12 +264,13 @@ hr {
   background-color: #f7f9fb;
   border-radius: 4px;
 }
-
+#abour{
+  text-align: center;
+  color: #34495e;
+}
 .content-wrapper {
   max-width: 860px;
   margin: 0 auto;
-  text-align: center;
-  color: #34495e;
 }
 
 .section h2 {
