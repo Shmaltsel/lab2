@@ -264,10 +264,6 @@ hr {
   background-color: #f7f9fb;
   border-radius: 4px;
 }
-#about p{
-  text-align: center;
-  color: #34495e;
-}
 .content-wrapper {
   max-width: 860px;
   margin: 0 auto;
@@ -667,7 +663,10 @@ body.dark-mode .comment-item {
 body.dark-mode .comment-item:nth-child(odd) {
   background-color: #22314b;
 }
-
+#about p{
+  text-align: center;
+  color: #34495e;
+}
 /* ===================== Адаптивні налаштування ===================== */
 @media (max-width: 700px) {
   .header-container {
