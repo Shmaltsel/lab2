@@ -29,10 +29,11 @@
   <!-- ===== Основний контент ===== -->
   <main>
     <!-- Розділ "Про себе" -->
-    <section id="about" class="section about">
+    <section id="about" class="section">
       <div class="content-wrapper">
         <h2>Про себе</h2>
-        <p>Привіт! Я — <strong>Шмальцель Артур</strong>, студент НУЛП, захоплений веб-розробкою та кібербезпекою. Моя мета — створювати красиві й функціональні інтерфейси з максимальною увагою до деталей.</p>
+        <p>Привіт! Я — <strong>Шмальцель Артур</strong>, студент НУЛП, захоплений веб-розробкою та кібербезпекою.
+        Моя мета — створювати красиві й функціональні інтерфейси з максимальною увагою до деталей.</p>
       </div>
     </section>
     <hr>
@@ -61,7 +62,8 @@
     <section id="experience" class="section">
       <div class="content-wrapper">
         <h2>Досвід роботи</h2>
-        <p>Поки що не мав офіційного досвіду в IT. Участь у навчальних проєктах під час курсів Mate Academy: командні вправи з розробки веб-сайтів, скриптів, UI/UX-дизайну.</p>
+        <p>Поки що не мав офіційного досвіду в IT. Участь у навчальних проєктах під час курсів Mate Academy:
+        командні вправи з розробки веб-сайтів, скриптів, UI/UX-дизайну.</p>
       </div>
     </section>
     <hr>
@@ -93,29 +95,29 @@
             <p>Односторінковий сайт-портфоліо з HTML, CSS, JavaScript.</p>
             <ul>
               <li>Розділ “Про себе” з біографією</li>
-              <li>Розділ “Навички” з прогресбарами</li>
+              <li>Розділ “Навички” з прогрес-барами</li>
               <li>Форма зворотного зв’язку</li>
-              <li>Адаптивна верстка</li>
+              <li>Адаптивна верстка під мобільні пристрої</li>
             </ul>
           </article>
           <article class="project-card">
             <h3>To-Do Додаток на React</h3>
-            <p>Додаток для списку справ із React:</p>
+            <p>Навчальний додаток для списку справ:</p>
             <ul>
               <li>Додавання/видалення завдань</li>
               <li>Збереження у localStorage</li>
               <li>React Hooks (useState, useEffect)</li>
-              <li>Маршрутизація</li>
+              <li>Базова маршрутизація між сторінками</li>
             </ul>
           </article>
           <article class="project-card">
-            <h3>Скрипт на Python</h3>
-            <p>Скрипт для масової обробки CSV-даних:</p>
+            <h3>Скрипт для обробки даних (Python)</h3>
+            <p>Скрипт, що:</p>
             <ul>
-              <li>Читання CSV, фільтрація</li>
-              <li>Сортування за ціною</li>
-              <li>Перерахунок валют</li>
-              <li>Запис у JSON</li>
+              <li>Читає CSV з цінами</li>
+              <li>Фільтрує/сортує за ціною</li>
+              <li>Перераховує валюту</li>
+              <li>Записує у JSON</li>
             </ul>
           </article>
         </div>
@@ -127,13 +129,15 @@
     <section id="contact" class="section">
       <div class="content-wrapper">
         <h2>Контакти</h2>
-        <p>Зв’язатися зі мною можна по email:</p>
-        <a href="mailto:artur.shmaltel.kb.2022@lpnu.ua" class="contact-button">Написати листа</a>
+        <p>Зв’язатися зі мною можна по Email:</p>
+        <button class="email-button" id="email-button">
+          ✉ Написати листа
+        </button>
       </div>
     </section>
     <hr>
 
-    <!-- Розділ з коментарями від “роботодавців” -->
+    <!-- Розділ з коментарями від роботодавців -->
     <section id="comments" class="section">
       <div class="content-wrapper">
         <h2>Відгуки роботодавців</h2>
@@ -144,28 +148,31 @@
     </section>
   </main>
 
-  <!-- ===== Плаваюча кнопка "Показати/Приховати інфо" ===== -->
+  <!-- ===== Плаваюча кнопка «Приховати/Показати інфо» ===== -->
   <button id="toggle-info-btn" class="toggle-info-btn">
-    <span id="toggle-icon">▲</span>
-    <span id="toggle-text">Приховати інфо</span>
+    <span id="toggle-icon">▼</span>
+    <span id="toggle-text">Показати інфо</span>
   </button>
 
   <!-- ===== Фіксований Footer з інформацією з localStorage ===== -->
   <footer>
     <div id="local-storage-info" class="footer-info">
-      <!-- JS вставить сюди інформацію про ОС/браузер -->
+      <!-- JS вставить сюди дані про браузер/платформу -->
     </div>
     <div class="footer-brand">
       <p>™ Шмальцель Артур 2025</p>
     </div>
   </footer>
 
+  <!-- ===== Плаваюча кнопка «Scroll to Top» ===== -->
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="До верху">↑</button>
+
   <!-- ===== Модальне вікно з формою зворотного зв’язку ===== -->
   <div id="feedback-modal" class="modal-overlay">
     <div class="modal-content">
       <button id="modal-close-btn" class="modal-close">&times;</button>
       <h2>Зворотній зв’язок</h2>
-      <!-- Замініть "YOUR_ENDPOINT" на ваш Formspree endpoint -->
+      <!-- Замість YOUR_ENDPOINT підставте свій Formspree endpoint -->
       <form id="feedback-form" action="https://formspree.io/f/YOUR_ENDPOINT" method="POST" target="_blank">
         <label for="fb-name">Ім’я:</label>
         <input type="text" id="fb-name" name="name" required>

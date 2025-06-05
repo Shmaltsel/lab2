@@ -4,13 +4,15 @@
 const VARIANT_NUMBER = 1; // Замініть 1 на свій номер варіанту
 
 document.addEventListener('DOMContentLoaded', () => {
-  storeUserInfo();          // 1.a: Зберігаємо ОС/браузер у localStorage
-  displayStoredUserInfo();  // 1.b: Відображаємо у футері
-  fetchComments();          // 2.a: Завантажуємо й відображаємо коментарі
-  scheduleFeedbackModal();  // 3.a: Показ модалки через 1 хвилину
-  setupThemeToggle();       // 4.a: Налаштування перемикача теми
-  applyAutoTheme();         // 4.b: Автоматичне перемикання (07:00—21:00 → день, інакше ніч)
-  setupInfoToggle();        // 5: Перемикач видимості блоку з інформацією
+  storeUserInfo();          // 1. Зберігаємо ОС/браузер у localStorage
+  displayStoredUserInfo();  // 2. Відображаємо дані у футері
+  fetchComments();          // 3. Завантажуємо та відображаємо коментарі
+  scheduleFeedbackModal();  // 4. Показ модалки через 60 секунд
+  setupThemeToggle();       // 5. Перемикач теми (день/ніч)
+  applyAutoTheme();         // 6. Автоматичне перемикання теми за часом
+  setupInfoToggle();        // 7. Кнопка «Приховати/Показати інфо»
+  setupScrollTopButton();   // 8. Кнопка «Scroll to Top»
+  setupScrollColorShift();  // 9. Зміна фону при скролі
 });
 
 // ========== 1. Зберігання даних у браузері ==========
@@ -44,7 +46,7 @@ function displayStoredUserInfo() {
   `;
 }
 
-// ========== 2. Відображення динамічного вмісту із сервера ==========
+// ========== 2. Завантаження та відображення коментарів ==========
 function fetchComments() {
   const url = `https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`;
   fetch(url)
@@ -54,9 +56,11 @@ function fetchComments() {
     })
     .then(comments => {
       const list = document.getElementById('comments-list');
-      comments.forEach(comment => {
+      comments.forEach((comment, idx) => {
         const li = document.createElement('li');
         li.classList.add('comment-item');
+        // Задаємо відкладення анімації для кожного коментаря
+        li.style.animationDelay = `${1.2 + idx * 0.2}s`;
         li.innerHTML = `
           <p><strong>${escapeHTML(comment.name)}</strong> (${escapeHTML(comment.email)})</p>
           <p>${escapeHTML(comment.body)}</p>
@@ -76,9 +80,9 @@ function escapeHTML(str) {
   }[tag]));
 }
 
-// ========== 3. Відправлення форми зворотного зв’язку ==========
+// ========== 3. Модальне вікно з формою ==========
 function scheduleFeedbackModal() {
-  setTimeout(showFeedbackModal, 60000); // через 60 секунд
+  setTimeout(showFeedbackModal, 60000); // 60 секунд
 }
 function showFeedbackModal() {
   const overlay = document.getElementById('feedback-modal');
@@ -92,7 +96,7 @@ function hideFeedbackModal() {
   document.getElementById('feedback-modal').classList.remove('visible');
 }
 
-// ========== 4. Перемикач теми (день/ніч) ==========
+// ========== 4. Перемикач теми ==========
 function setupThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   btn.addEventListener('click', () => {
@@ -102,8 +106,7 @@ function setupThemeToggle() {
   loadThemePreference();
 }
 function applyAutoTheme() {
-  const now = new Date();
-  const hours = now.getHours();
+  const hours = new Date().getHours();
   if (hours < 7 || hours >= 21) {
     document.body.classList.add('dark-mode');
   } else {
@@ -124,27 +127,68 @@ function loadThemePreference() {
   }
 }
 
-// ========== 5. Перемикач видимості блоку з інформацією ==========
+// ========== 5. Плаваюча кнопка «Приховати/Показати інфо» ==========
 function setupInfoToggle() {
   const btn = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
   const icon = document.getElementById('toggle-icon');
   const text = document.getElementById('toggle-text');
-  let visible = true;
+
+  let visible = false; // стан: false = приховано, true = показано
 
   btn.addEventListener('click', () => {
     visible = !visible;
+
+    // Додаємо клас для обертання іконки
+    btn.classList.add('rotate');
+    setTimeout(() => btn.classList.remove('rotate'), 600);
+
     if (visible) {
+      // Розгортаємо панель
       infoDiv.classList.add('visible');
       icon.textContent = '▲';
       text.textContent = 'Приховати інфо';
     } else {
+      // Згортаємо панель
       infoDiv.classList.remove('visible');
       icon.textContent = '▼';
       text.textContent = 'Показати інфо';
     }
   });
+} // ← Закриваємо setupInfoToggle
 
-  // Початково показуємо блок з інформацією
-  infoDiv.classList.add('visible');
+// ========== 6. Кнопка «Scroll to Top» ==========
+function setupScrollTopButton() {
+  const btn = document.getElementById('scroll-top-btn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn.classList.add('visible'); // показати плавно
+    } else {
+      btn.classList.remove('visible'); // сховати плавно
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ========== 7. Зміна фону при скролі ==========
+function setupScrollColorShift() {
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || window.pageYOffset;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    let scrollFraction = scrollTop / docHeight;
+    if (scrollFraction > 1) scrollFraction = 1;
+    if (scrollFraction < 0) scrollFraction = 0;
+
+    const startHue = 211;
+    const endHue   = 262;
+    const saturation = 50;
+    const lightness  = 40;
+
+    const currentHue = startHue + (endHue - startHue) * scrollFraction;
+    document.body.style.backgroundColor = `hsl(${currentHue.toFixed(1)}, ${saturation}%, ${lightness}%)`;
+  });
 }
