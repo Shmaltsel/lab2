@@ -1,7 +1,7 @@
 // ========== script.js ==========
 
 // Встановіть свій номер варіанту:
-const VARIANT_NUMBER = 1; // Замініть 1 на свій номер варіанту
+const VARIANT_NUMBER = 32; // Замініть 1 на свій номер варіанту
 
 document.addEventListener('DOMContentLoaded', () => {
   storeUserInfo();          // 1.a: Зберігаємо ОС/браузер у localStorage
