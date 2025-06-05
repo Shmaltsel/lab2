@@ -838,9 +838,9 @@ body.dark-mode .comment-item:nth-child(odd) {
 }
 
 @media (max-width: 480px) {
-  body{
-    background-color: green;
-  }
+ .content-wrappe{
+  color: red;
+ }
   nav a {
     font-size: 1.15rem;
     padding: 14px 16px;
