@@ -30,7 +30,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 9. Гамбургер-меню (мобільний режим)
   setupMobileMenu();
+
+  setupScrollColorShift();
+
 });
+
+function setupScrollColorShift() {
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || window.pageYOffset;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+
+    let scrollFraction = scrollTop / docHeight;
+    if (scrollFraction > 1) scrollFraction = 1;
+    if (scrollFraction < 0) scrollFraction = 0;
+
+    // Перевіряємо: якщо вмикнута темна тема
+    if (document.body.classList.contains('dark-mode')) {
+      // Фіксуємо hue = 220 (темно-синій), 
+      // а saturate і lightness інтерполюємо до gray (sat→0, light→10)
+      const hueFixed     = 220;
+      const startSatD    = 30;  // початкова насиченість 30%
+      const endSatD      = 0;   // кінцева насиченість 0% (сірий)
+      const startLightD  = 15;  // початкове lightness = 15%
+      const endLightD    = 10;  // кінцеве lightness = 10%
+
+      const currentSatD   = startSatD + (endSatD   - startSatD)   * scrollFraction;
+      const currentLightD = startLightD + (endLightD - startLightD) * scrollFraction;
+
+      document.body.style.background =
+        `hsl(${hueFixed}, ${currentSatD.toFixed(1)}%, ${currentLightD.toFixed(1)}%)`;
+    }
+    else {
+      // … ось тут без змін: світла тема (від 211→262 hue) …
+      const startHue   = 211;
+      const endHue     = 262;
+      const saturation = 50;
+      const lightness  = 40;
+
+      const currentHue = startHue + (endHue - startHue) * scrollFraction;
+      document.body.style.background =
+        `hsl(${currentHue.toFixed(1)}, ${saturation}%, ${lightness}%)`;
+    }
+  });
+}
+
+
 
 // ========== 1. Зберігання даних у браузері ==========
 function storeUserInfo() {
