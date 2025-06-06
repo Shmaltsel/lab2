@@ -1,13 +1,9 @@
-   ========================================================================== */
 @keyframes gradientBackground {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ==========================================================================
-   2. Базові налаштування
-   ========================================================================== */
 *,
 *::before,
 *::after {
@@ -15,7 +11,7 @@
 }
 
 html {
-  font-size: 100%;       /* 1rem = 16px */
+  font-size: 100%;
   line-height: 1.5;
   scroll-behavior: smooth;
 }
@@ -31,9 +27,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-/* ==========================================================================
-   3. Фіксований Header
-   ========================================================================== */
+
 header {
   position: fixed;
   top: 0;
@@ -50,29 +44,24 @@ header {
 .header-container {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 40px;            /* відстань між заголовком, навігацією і кнопкою теми */
-  justify-content: center;   /* сам grid-рядок вирівняний по центру всередині header */
-  align-items: center;       /* по вертикалі усе на одному рівні */
-  padding: 16px 20px;        /* ваші звичні відступи зверху/знизу */
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 20px;
 }
 
-/* ==========================================================================
-   3.1. Заголовок. Центруємо H1 незалежно від кнопок
-   ========================================================================== */
 .header-container h1 {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
-/* ==========================================================================
-   3.2. Гамбургер-кнопка (зліва під час мобільного режиму)
-   ========================================================================== */
+/* Гамбургер */
 #mobile-menu-btn {
-  display: none;                /* на десктопі невидима */
+  display: none;
   background: none;
   border: none;
-  font-size: 2rem;              /* великий символ «☰» */
+  font-size: 2rem;
   color: #ecf0f1;
   cursor: pointer;
   position: absolute;
@@ -90,9 +79,7 @@ header {
   color: #f1c40f;
 }
 
-/* ==========================================================================
-   3.3. Кнопка перемикання теми (праворуч під час мобільного режиму)
-   ========================================================================== */
+/* Кнопка теми */
 #theme-toggle {
   background: none;
   border: none;
@@ -111,9 +98,7 @@ header {
   color: #f1c40f;
 }
 
-/* ==========================================================================
-   3.4. Навігація (desktop-версія)
-   ========================================================================== */
+/* Навігація */
 nav {
   display: block;
 }
@@ -124,11 +109,7 @@ nav ul {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  justify-content: center; /* центруємо пункти навігації */
-}
-nav li {
-  margin: 0;
-  padding: 0;
+  justify-content: center;
 }
 nav a {
   color: #ecf0f1;
@@ -145,7 +126,7 @@ nav a::after {
   position: absolute;
   bottom: -4px;
   left: 0;
-  width: 0%;
+  width: 0;
   height: 2px;
   background-color: #ecf0f1;
   transition: width 0.6s ease;
@@ -154,14 +135,9 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* ==========================================================================
-   4. Кнопка перемикання теми
-   ========================================================================== */
-/* (Стилі залишилися вище у розділі 3.3) */
-
-/* ==========================================================================
-   5. Фіксований Footer
-   ========================================================================== */
+/* ======
+   Footer
+   ====== */
 footer {
   position: fixed;
   bottom: 0;
@@ -171,7 +147,7 @@ footer {
   backdrop-filter: blur(8px);
   color: #bdc3c7;
   text-align: center;
-  padding: 12px 0 40px;  /* додано місця для кнопок над футером */
+  padding: 12px 0 40px;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
   user-select: none;
   transition: background 0.8s ease, color 0.8s ease;
@@ -184,9 +160,6 @@ footer {
   user-select: none;
 }
 
-/* ==========================================================================
-   5.1. Блок з інформацією (footer-info)
-   ========================================================================== */
 .footer-info {
   text-align: left;
   max-width: 900px;
@@ -202,15 +175,12 @@ footer {
   opacity: 1;
 }
 
-/* ==========================================================================
-   6. Кнопка «Показати/Сховати інфо»
-   ========================================================================== */
 .toggle-info-btn {
   position: fixed;
   bottom: 16px;
   left: 16px;
   background-color: #3498db;
-  color: #ffffff;
+  color: #fff;
   border: none;
   padding: 8px 14px;
   border-radius: 24px;
@@ -228,167 +198,46 @@ footer {
   background-color: #2980b9;
 }
 
-/* ==========================================================================
-   6.1. На мобільних «Показати/Сховати інфо» перетворюється на круглу іконку
-   ========================================================================== */
-   /* === 1. Переконайтеся, що span з текстом завжди видимий у десктопі === */
 #toggle-text {
-  display: inline; /* або inline-block—як було спочатку */
-  font-size: 0.95rem; /* ваш початковий розмір тексту */
-  margin-left: 6px;   /* трохи проміжку між іконкою та текстом */
+  display: inline;
+  font-size: 0.95rem;
+  margin-left: 6px;
 }
 
-/* === 2. Створюємо плавний перехід для іконки «▼» у десктопі === */
 #toggle-icon {
   display: inline-block;
   transition: transform 0.3s ease;
 }
-
-/* === 3. При наявності класу .info-open перевертаємо іконку === */
 .toggle-info-btn.info-open #toggle-icon {
   transform: rotate(180deg);
 }
 
-/* === 4. У десктопі кнопка за замовчуванням—прямокутна, з текстом === */
-.toggle-info-btn {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
-  padding: 8px 14px;
-  border-radius: 24px;
-  font-size: 0.95rem;
-  background-color: #3498db;
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  z-index: 1000;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-.toggle-info-btn:hover {
-  background-color: #2980b9;
-}
-
+/* Адаптація кнопки на мобільному */
 @media (max-width: 768px) {
-  header nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(44, 62, 80, 0.95);
-    backdrop-filter: blur(8px);
-
-    /* Сховаємо одразу пункти, а сам nav заховаємо з затримкою */
-    transform: translateY(-20px);
-    opacity: 0;
-    pointer-events: none;
-
-    transition: 
-      transform 0.4s ease 0.6s, 
-      opacity   0.4s ease 0.6s;
-    overflow: hidden;
-    z-index: 1050;
-  }
-
-  /* 2) При розгортанні (header має .menu-open) — не затримуємо, показуємо одразу */
-  header.menu-open nav {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-    /* При відкритті знімаємо будь-які затримки */
-    transition: 
-      transform 0.4s ease 0s, 
-      opacity   0.4s ease 0s;
-  }
-
-  /* ===============================
-     Пункти меню — базові налаштування
-     =============================== */
-  header nav a {
-    display: block;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    /* transition-delay задаємо окремо далі */
-  }
-
-  /* ---------------------------------
-     3) Затримки появи пунктів (menu-open = true)
-     --------------------------------- */
-  header.menu-open nav a:nth-child(1) {
-    transition-delay: 0.15s;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  header.menu-open nav a:nth-child(2) {
-    transition-delay: 0.25s;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  header.menu-open nav a:nth-child(3) {
-    transition-delay: 0.35s;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  header.menu-open nav a:nth-child(4) {
-    transition-delay: 0.45s;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* Якщо є більше пунктів, продовжіть ланцюжок (nth-child(5) { delay: 0.55s; } тощо) */
-
-  /* ---------------------------------
-     4) Затримки приховання пунктів (menu-open = false)
-     --------------------------------- */
-  /* Ми сховаємо пункти у зворотному порядку, з дедлайнами 0.15, 0.25, … */
-  header:not(.menu-open) nav a:nth-child(4) {
-    transition-delay: 0.15s;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  header:not(.menu-open) nav a:nth-child(3) {
-    transition-delay: 0.25s;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  header:not(.menu-open) nav a:nth-child(2) {
-    transition-delay: 0.35s;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  header:not(.menu-open) nav a:nth-child(1) {
-    transition-delay: 0.45s;
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  /* Якщо є 5-й і далі — теж задайте затримку в 0.55s, 0.65s тощо */
-
-  /* ---------------------------------
-     Інші ваші мобільні стилі...
-     --------------------------------- */
-  #mobile-menu-btn {
-    display: block;
+  #education *,
+  #skills *,
+  #contact * {
+    color: #ffffff !important;
+}
+  .header-container h1 {
+    font-size: 1.6rem;
   }
   .toggle-info-btn {
-    font-size: 0;
     width: 52px;
     height: 52px;
     padding: 0;
     border-radius: 50%;
-    position: fixed;
-    bottom: 64px;    /* вирівнювання над футером */
-    left: 16px;      /* лівий край екрану + 16px відступ */
-    transform: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.4s ease, transform 0.3s ease;
+    bottom: 64px;
+    left: 16px;
+    font-size: 0;
+  }
+  #toggle-text {
+    display: none;
   }
   .toggle-info-btn::before {
     content: "▼";
     font-size: 1.2rem;
-    color: #ffffff;
+    color: #fff;
     display: block;
     transition: transform 0.3s ease;
   }
@@ -397,19 +246,15 @@ footer {
   }
 }
 
-/* ==========================================================================
-   7. Плаваюча кнопка «Scroll to Top»
-   ========================================================================== */
 .scroll-top-btn {
   position: fixed;
   bottom: 16px;
   right: 16px;
-  left: auto;
   width: 48px;
   height: 48px;
   font-size: 1.5rem;
   background-color: #3498db;
-  color: #ffffff;
+  color: #fff;
   border: none;
   border-radius: 50%;
   opacity: 0;
@@ -418,7 +263,6 @@ footer {
   pointer-events: none;
   z-index: 1000;
 }
-
 .scroll-top-btn.visible {
   opacity: 0.9;
   transform: translateY(0);
@@ -429,34 +273,18 @@ footer {
   transform: translateY(0) scale(1.1);
 }
 
-/* ==========================================================================
-   7.1. Адаптація «Scroll to Top» на мобільних: пересуваємо праворуч над футером
-   ========================================================================== */
 @media (max-width: 768px) {
-  .header-container h1 {
-    font-size: 1.6rem;
-  }
   .scroll-top-btn {
     width: 60px;
     height: 60px;
     font-size: 1.8rem;
-    bottom: 64px;   /* вирівнювання над футером (симетрично toggle-info) */
-    right: 16px;    /* правий край екрану + 16px відступ */
+    bottom: 64px;
+    right: 16px;
     transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  .scroll-top-btn.visible {
-    opacity: 0.9;
-    transform: translateY(0);
-  }
-  .scroll-top-btn:hover {
-    background-color: #2980b9;
-    transform: scale(1.1);
   }
 }
 
-/* ==========================================================================
-   8. Основний контент
-   ========================================================================== */
+
 main {
   width: 100%;
   max-width: 900px;
@@ -469,9 +297,7 @@ main {
   transition: background-color 0.8s ease, color 0.8s ease;
 }
 
-/* ==========================================================================
-   9. Роздільники
-   ========================================================================== */
+
 hr {
   border: none;
   height: 2px;
@@ -483,9 +309,6 @@ hr {
   transition: background-color 0.8s ease;
 }
 
-/* ==========================================================================
-  10. Секції (fadeInUp при завантаженні)
-   ========================================================================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -498,7 +321,7 @@ hr {
 }
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 .section {
   padding: 30px 0;
@@ -508,7 +331,6 @@ hr {
   transform: translateY(20px);
   animation: fadeInUp 1s ease forwards;
 }
-/* Затримки для секцій */
 .section:nth-of-type(1) { animation-delay: 0.2s; }
 .section:nth-of-type(2) { animation-delay: 0.4s; }
 .section:nth-of-type(3) { animation-delay: 0.6s; }
@@ -516,18 +338,14 @@ hr {
 .section:nth-of-type(5) { animation-delay: 1.0s; }
 .section:nth-of-type(6) { animation-delay: 1.2s; }
 .section:nth-of-type(7) { animation-delay: 1.4s; }
-
 .section:nth-of-type(odd) {
   background-color: #f7f9fb;
   border-radius: 4px;
 }
-
 .content-wrapper {
   max-width: 860px;
   margin: 0 auto;
 }
-
-/* Заголовок секції */
 .section h2 {
   margin-bottom: 16px;
   font-size: 1.8rem;
@@ -548,9 +366,6 @@ hr {
   transition: background-color 0.8s ease;
 }
 
-/* ==========================================================================
-  11. Списки
-   ========================================================================== */
 .section ul {
   list-style: none;
   padding-left: 0;
@@ -579,9 +394,6 @@ hr {
   color: #2980b9;
 }
 
-/* ==========================================================================
-  12. Проєкти
-   ========================================================================== */
 .project-grid {
   display: flex;
   flex-wrap: wrap;
@@ -589,14 +401,14 @@ hr {
 }
 .project-card {
   flex: 1 1 calc(30% - 24px);
-  background-color: #ffffff;
+  background-color: #fff;
   border-left: 6px solid #3498db;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   padding: 20px;
   transition:
-    transform 0.7s cubic-bezier(0.25,0.8,0.25,1),
-    box-shadow 0.7s cubic-bezier(0.25,0.8,0.25,1),
+    transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
     border-color 0.7s ease,
     background-color 0.8s ease,
     color 0.8s ease;
@@ -645,12 +457,10 @@ hr {
   color: #2980b9;
 }
 
-/* ==========================================================================
-  13. Кнопка Email
-   ========================================================================== */
+
 .email-button {
   background-color: #8e44ad;
-  color: #ffffff;
+  color: #fff;
   border: none;
   padding: 12px 24px;
   border-radius: 28px;
@@ -667,13 +477,10 @@ hr {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* ==========================================================================
-  14. Кнопка «Відправити» у модальному вікні
-   ========================================================================== */
 .submit-btn {
   margin-top: 16px;
   background-color: #2980b9;
-  color: #ffffff;
+  color: #fff;
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
@@ -687,15 +494,12 @@ hr {
   transform: translateY(-3px) scale(1.03);
 }
 
-/* ==========================================================================
-  15. Кнопка «Зв’язатися» (контакти)
-   ========================================================================== */
 .contact-button {
   display: inline-block;
   margin-top: 12px;
   padding: 10px 20px;
   background-color: #2980b9;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   border-radius: 4px;
   font-weight: 500;
@@ -707,9 +511,6 @@ hr {
   transform: translateY(-3px) scale(1.02);
 }
 
-/* ==========================================================================
-  16. Розділ «Мови»
-   ========================================================================== */
 .languages {
   display: flex;
   flex-wrap: wrap;
@@ -717,7 +518,7 @@ hr {
 }
 .languages li {
   flex: 1 1 calc(45% - 20px);
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 14px 18px;
   border-radius: 4px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
@@ -739,16 +540,13 @@ hr {
   margin-right: 10px;
 }
 
-/* ==========================================================================
-  17. Додаткова інформація
-   ========================================================================== */
 .additional li {
   margin-bottom: 10px;
 }
 
-/* ==========================================================================
-  18. Модальне вікно
-   ========================================================================== */
+/* ============
+   Модальне вікно
+   ============ */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -767,7 +565,7 @@ hr {
   opacity: 1;
 }
 .modal-content {
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 24px 30px;
   border-radius: 8px;
   max-width: 400px;
@@ -821,16 +619,14 @@ hr {
   transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
 }
 
-/* ==========================================================================
-  19. Коментарі
-   ========================================================================== */
+
 .comments-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 .comment-item {
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 12px 16px;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -851,11 +647,8 @@ hr {
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ==========================================================================
-  20. Темна тема (чорний фон)
-   ========================================================================== */
 body.dark-mode {
-  background-color: #000000;
+  background-color: #000;
   color: #dcdcdc;
 }
 body.dark-mode main {
@@ -873,7 +666,7 @@ body.dark-mode nav a:hover {
   color: #8e44ad;
 }
 body.dark-mode hr {
-  background-color: #444444;
+  background-color: #444;
 }
 body.dark-mode .section:nth-of-type(odd) {
   background-color: #1a1a1a;
@@ -937,54 +730,44 @@ body.dark-mode .comment-item {
   box-shadow: none;
 }
 body.dark-mode .comment-item:nth-child(odd) {
-  background-color: #111111;
+  background-color: #111;
+}
+body.dark-mode .modal-overlay {
+  background-color: #111;
 }
 
-body.dark-mode .modal-overlay{
-  background-color: #111111;
-}
-/* ==========================================================================
-  21. Адаптивні налаштування для мобільних (десктоп готовий вище)
-   ========================================================================== */
-
-/* ---- 21.1. Екрани ≤ 768px: мобільний режим ---- */
 @media (max-width: 768px) {
-
-  /* 21.1.1. Гамбургер-меню: показуємо кнопку та приховуємо nav, додаємо анімацію розгортання */
+  header h1 {
+    font-size: 1.6rem;
+  }
+  header {
+    text-align: center;
+  }
   #mobile-menu-btn {
     display: block;
   }
   nav {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    min-width: 200px;
-    border-radius: 4px;
-  }
-  header{
-    text-align: center;
-  }
-  .menu-open nav {
-    max-height: 500px; /* достатньо для всього списку */
-    transition: max-height 0.5s ease-in;
+    left: 0;
+    right: 0;
     background: rgba(44, 62, 80, 0.95);
     backdrop-filter: blur(8px);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in;
+    border-radius: 4px;
     margin-top: 8px;
   }
-  .menu-open nav ul {
+  header.menu-open nav {
+    max-height: 500px;
+  }
+  header.menu-open nav ul {
     flex-direction: column;
     gap: 16px;
     padding: 8px 0;
   }
-  .menu-open nav li {
-    width: 100%;
-  }
-  .menu-open nav a {
+  header.menu-open nav a {
     display: block;
     width: 100%;
     padding: 12px 16px;
@@ -993,79 +776,17 @@ body.dark-mode .modal-overlay{
     transition: background-color 0.4s ease;
     text-align: center;
   }
-  .menu-open nav a:hover {
+  header.menu-open nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
   }
 
-  /* 21.1.2. Заголовок: ширину не чіпаємо, але кнопки лишаються по боках */
-  /* Заголовок уже центрується абсолютним позиціонуванням */
-
-  /* 21.1.3. Кнопка «Показати/Сховати інфо» (лівий бік) */
-  .toggle-info-btn {
-    width: 52px;
-    height: 52px;
-    padding: 0;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 64px;    /* вирівнювання над футером */
-    left: 16px;      /* відступ від лівого краю */
-    transform: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #3498db;
-    color: #ffffff;
-    transition: background-color 0.4s ease, transform 0.3s ease;
-  }
-   /* Ховаємо тільки текст «Показати інфо» */
-  #toggle-text {
-    display: none;
-  }
-  /* Залишаємо лише іконку (трикутник) і збільшуємо її розмір */
-  #toggle-icon {
-    display: none;
-    font-size: 1.2rem;
-  }
-  .toggle-info-btn::before {
-    content: "▼";
-    font-size: 1.2rem;
-    color: #ffffff;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-  .toggle-info-btn.info-open::before {
-    transform: rotate(180deg);
-  }
-  .toggle-info-btn:hover {
-    background-color: #2980b9;
-  }
-
-
-  /* 21.1.4. Кнопка «Scroll to Top» (правий бік) */
-  .scroll-top-btn {
-    width: 60px;
-    height: 60px;
-    font-size: 1.8rem;
-    bottom: 64px;   /* вирівнювання над футером */
-    right: 16px;    /* відступ від правого краю */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  .scroll-top-btn.visible {
-    opacity: 0.9;
-    transform: translateY(0);
-  }
-  .scroll-top-btn:hover {
-    background-color: #2980b9;
-    transform: scale(1.1);
-  }
-
-  /* 21.1.5. Main і секції: оптимізуємо відступи та шрифти */
   main {
     width: 100%;
     max-width: none;
     padding: 100px 12px 80px;
     border-radius: 0;
     box-shadow: none;
+    background-color: transparent;
   }
   .section {
     padding: 24px 0;
@@ -1083,141 +804,107 @@ body.dark-mode .modal-overlay{
     margin-bottom: 14px;
   }
 
-  /* 21.1.6. Секція «Про себе» */
+  /* Секція About */
   #about {
-    color: #4b6a87;
     padding: 20px 16px;
+    margin: 16px 8px;
+    border-radius: 12px;
+    color: #4b6a87;
   }
-  #about .content-wrapper {
-    gap: 12px;
-  }
-  #about .content-wrapper p:nth-of-type(1) {
-    font-size: 1.3rem;
-  }
-  #about .content-wrapper p:nth-of-type(2),
-  #about .content-wrapper p:nth-of-type(3) {
-    font-size: 1.05rem;
-  }
-  #about .content-wrapper p:nth-of-type(4) {
-    font-size: 0.95rem;
-    max-width: 90%;
-  }
-
-  /* 21.1.7. Карти проєктів */
-  .project-grid {
-    display: block;
-    padding: 0 12px;
-  }
-  .project-card {
-    width: 100%;
-    margin-bottom: 24px;
-    padding: 16px;
-  }
-  .project-card h3 {
-    font-size: 1.3rem;
-  }
-  .project-card p,
-  .project-card ul li {
-    font-size: 1rem;
-  }
-
-  /* 21.1.8. Коментарі */
-  .comments-list {
-    padding: 0 12px;
-  }
-  .comment-item {
-    padding: 12px 16px;
-    font-size: 0.95rem;
-  }
-
-  /* 21.1.9. Кнопки Email, Submit, Contact */
-  .email-button,
-  .submit-btn,
-  .contact-button {
-    padding: 14px 28px;
-    font-size: 1.05rem;
-  }
-}
-
-/* ---- 21.2. Екрани ≤ 480px: ще дрібніші коригування ---- */
-@media (max-width: 480px) {
-
-  /* 21.2.1. Header: трохи менший заголовок і більший padding меню */
-  nav a {
-    font-size: 1.15rem;
-    padding: 14px 16px;
-  }
-  header h1 {
+  #about h2 {
     font-size: 1.6rem;
   }
-
-  /* 21.2.2. Секції */
-  .section h2 {
-    font-size: 1.5rem;
+  #about p {
+    font-size: 0.95rem;
   }
-  .section ul li {
-    font-size: 0.98rem;
+  #about ul li {
+    font-size: 0.95rem;
     padding-left: 20px;
   }
-
-  /* 21.2.3. Секція «Про себе» */
-  #about .content-wrapper p:nth-of-type(1) {
-    font-size: 1.25rem;
-  }
-  #about .content-wrapper п:nth-of-type(2),
-  #about .content-wrapper p:nth-of-type(3) {
-    font-size: 1rem;
-  }
-  #about .content-wrapper p:nth-of-type(4) {
-    font-size: 0.9rem;
+  #about ul li::before {
+    font-size: 1.1rem;
   }
 
-  /* 21.2.4. Карти проєктів */
-  .project-card {
-    margin-bottom: 28px;
-  }
-
-  /* 21.2.5. Коментарі */
-  .comment-item {
-    padding: 10px 14px;
-    font-size: 0.9rem;
-  }
-
-  /* 21.2.6. Кнопки Email, Submit, Contact */
-  .email-button,
-  .submit-btn,
-  .contact-button {
-    padding: 12px 24px;
-    font-size: 1rem;
-  }
-
-  /* 21.2.7. Розташування круглих кнопок футера */
   .toggle-info-btn {
-    bottom: 40px;  /* трохи зміщуємо вниз, щоб текст «Шмальцель Артур 2025» був видно */
-    left: 12px;
+    bottom: 64px;
+    left: 16px;
     width: 52px;
     height: 52px;
   }
   .scroll-top-btn {
-    bottom: 40px;
-    right: 12px;
-    width: 52px;
-    height: 52px;
-    font-size: 1.5rem;
+    bottom: 64px;
+    right: 16px;
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
+  .education *,
+  .skills *,
+  .contact * {
+    color: #fff !important;
+  }
+
+  @media (max-width: 480px) {
+    nav a {
+      font-size: 1.15rem;
+      padding: 14px 16px;
+    }
+    header h1 {
+      font-size: 1.6rem;
+    }
+    .section h2 {
+      font-size: 1.5rem;
+    }
+    .section ul li {
+      font-size: 0.98rem;
+      padding-left: 20px;
+    }
+    #about h2 {
+      font-size: 1.6rem;
+    }
+    #about p {
+      font-size: 0.95rem;
+    }
+    #about ul li {
+      font-size: 0.9rem;
+      padding-left: 18px;
+    }
+    .project-card {
+      margin-bottom: 28px;
+    }
+    .comment-item {
+      padding: 10px 14px;
+      font-size: 0.9rem;
+    }
+    .email-button,
+    .submit-btn,
+    .contact-button {
+      padding: 12px 24px;
+      font-size: 1rem;
+    }
+    .toggle-info-btn {
+      bottom: 40px;
+      left: 12px;
+      width: 52px;
+      height: 52px;
+    }
+    .scroll-top-btn {
+      bottom: 40px;
+      right: 12px;
+      width: 52px;
+      height: 52px;
+      font-size: 1.5rem;
+    }
   }
 }
 
-/* ---- 21.3. Екрани ≤ 600px: виключення тіней ---- */
 @media (max-width: 600px) {
-  .project-card {
-    box-shadow: none;
-  }
+  .project-card,
   .comment-item {
     box-shadow: none;
   }
 }
 
-/* ---- 21.4. Екрани ≤ 1024px (планшети): коригування шрифтів і кнопок ---- */
 @media (max-width: 1024px) {
   header h1 {
     font-size: 1.9rem;
@@ -1238,43 +925,23 @@ body.dark-mode .modal-overlay{
   }
 }
 
-/* ==========================================================================
-   22. Плавні переходи для всіх інтерактивних елементів
-   ========================================================================== */
-button,
-nav a {
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-/* ================================
-   Красиво оформлена секція #about
-   ================================ */
 #about {
-  /* Легкий градієнтний фон від білого до дуже світло-сірого */
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.9),
-    rgba(245, 245, 245, 0.9)
-  );
-  border-radius: 16px;            /* плавні заокруглення */
-  padding: 40px 30px;             /* простір всередині */
-  margin: 24px auto;              /* збоку авто, зверху/знизу—відступ */
-  max-width: 800px;               /* обмежена ширина, щоб не розтягувалась занадто */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* м’яка тінь */
+  background: linear-gradient(to bottom right, rgba(255,255,255,0.9), rgba(245,245,245,0.9));
+  border-radius: 16px;
+  padding: 40px 30px;
+  margin: 24px auto;
+  max-width: 800px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.2s;          /* затримка, щоби трохи з’являлась після хедеру */
+  animation-delay: 0.2s;
 }
-
-/* При наведенні шось ненав’язливого: злегка підняти секцію */
 #about:hover {
   transform: translateY(0) scale(1.015);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
 }
-
-/* Заголовок секції */
 #about h2 {
   margin: 0 0 12px;
   font-size: 2rem;
@@ -1293,16 +960,12 @@ nav a {
   background-color: #3498db;
   border-radius: 2px;
 }
-
-/* Описовий текст */
 #about p {
   margin: 16px 0;
   font-size: 1.05rem;
   line-height: 1.6;
   color: #4b6a87;
 }
-
-/* Якщо всередині #about є список або інші блоки, стилізуємо їх трохи делікатніше */
 #about ul {
   list-style: none;
   padding-left: 0;
@@ -1326,7 +989,6 @@ nav a {
   transform: translateY(2px);
 }
 
-/* Адаптив під планшети (≤1024px) */
 @media (max-width: 1024px) {
   #about {
     padding: 32px 24px;
@@ -1340,17 +1002,7 @@ nav a {
   }
 }
 
-/* Адаптив під мобільні (≤768px) */
 @media (max-width: 768px) {
-  main{
-    background-color: transparent;
-  }
-
-#education *,
-#skills *,
-#contact * {
-  color: #ffffff !important;
-}
   #about {
     padding: 24px 16px;
     margin: 16px 8px;
@@ -1372,50 +1024,33 @@ nav a {
 }
 
 body.dark-mode #about {
-  /* Темний фон із легким градієнтом від дуже темно-синього до ще темнішого сірого */
-  background: linear-gradient(
-    to bottom right,
-    hsl(220, 20%, 12%),
-    hsl(220, 10%, 8%)
-  );
+  background: linear-gradient(to bottom right, hsl(220,20%,12%), hsl(220,10%,8%));
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  /* Трохи зменшимо яскравість плавного підняття на hover */
   transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.8s ease;
 }
-
-/* Текст і заголовок */
 body.dark-mode #about h2 {
-  color: #e0e0e0; /* світло-сірий */
+  color: #e0e0e0;
 }
 body.dark-mode #about h2::after {
-  background-color: hsl(210, 50%, 60%); /* світло-синя підкреслювальна лінія */
+  background-color: hsl(210,50%,60%);
 }
-
 body.dark-mode #about p {
-  color: #c0c0c0; /* трохи темніший сірий для абзаців */
+  color: #c0c0c0;
 }
-
-/* Список: змінюємо колір маркерів і тексту */
 body.dark-mode #about ul li {
   color: #d0d0d0;
 }
 body.dark-mode #about ul li::before {
-  content: "★";
-  color: hsl(210, 50%, 60%); /* та сама світло-синя з х2 */
+  color: hsl(210,50%,60%);
 }
-
-/* Hover ефект у темряві — трохи менше “підйому” */
 body.dark-mode #about:hover {
   transform: translateY(0) scale(1.01);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8);
 }
 
-/* Для адаптивів у темній темі можна повторити ті ж медіа-запити, 
-   але кольори вже коригуються глобально через body.dark-mode #about */
 @media (max-width: 768px) {
   body.dark-mode #about {
-    /* Зменшимо контраст фону на малих екранах */
-    background: hsl(220, 10%, 10%);
+    background: hsl(220,10%,10%);
   }
   body.dark-mode #about h2 {
     color: #e0e0e0;
@@ -1427,6 +1062,11 @@ body.dark-mode #about:hover {
     color: #d0d0d0;
   }
   body.dark-mode #about ul li::before {
-    color: hsl(210, 50%, 60%);
+    color: hsl(210,50%,60%);
   }
+}
+
+button,
+nav a {
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
