@@ -1,38 +1,16 @@
-// ========== script.js ==========
-
-// Встановіть свій номер варіанту:
-const VARIANT_NUMBER = 32; // Замініть 1 на свій номер варіанту
+const VARIANT_NUMBER = 32;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Зберігаємо дані про ОС/браузер у localStorage
   storeUserInfo();
-
-  // 2. Відображаємо дані у футері
   displayStoredUserInfo();
-
-  // 3. Завантажуємо та відображаємо коментарі
   fetchComments();
-
-  // 4. Показ модалки через 60 секунд
   scheduleFeedbackModal();
-
-  // 5. Перемикач теми (день/ніч)
   setupThemeToggle();
-
-  // 6. Автоматичне перемикання теми за часом
   applyAutoTheme();
-
-  // 7. Кнопка «Показати/Сховати інфо»
   setupInfoToggle();
-
-  // 8. Кнопка «Scroll to Top»
   setupScrollTopButton();
-
-  // 9. Гамбургер-меню (мобільний режим)
   setupMobileMenu();
-
   setupScrollColorShift();
-
 });
 
 function setupScrollColorShift() {
@@ -41,52 +19,31 @@ function setupScrollColorShift() {
     const docHeight = document.body.scrollHeight - window.innerHeight;
     if (docHeight <= 0) return;
 
-    let scrollFraction = scrollTop / docHeight;
-    if (scrollFraction > 1) scrollFraction = 1;
-    if (scrollFraction < 0) scrollFraction = 0;
+    let fraction = scrollTop / docHeight;
+    fraction = Math.min(Math.max(fraction, 0), 1);
 
-    // Перевіряємо: якщо вмикнута темна тема
     if (document.body.classList.contains('dark-mode')) {
-      // Фіксуємо hue = 220 (темно-синій), 
-      // а saturate і lightness інтерполюємо до gray (sat→0, light→10)
-      const hueFixed     = 220;
-      const startSatD    = 30;  // початкова насиченість 30%
-      const endSatD      = 0;   // кінцева насиченість 0% (сірий)
-      const startLightD  = 15;  // початкове lightness = 15%
-      const endLightD    = 10;  // кінцеве lightness = 10%
-
-      const currentSatD   = startSatD + (endSatD   - startSatD)   * scrollFraction;
-      const currentLightD = startLightD + (endLightD - startLightD) * scrollFraction;
-
-      document.body.style.background =
-        `hsl(${hueFixed}, ${currentSatD.toFixed(1)}%, ${currentLightD.toFixed(1)}%)`;
-    }
-    else {
-      // … ось тут без змін: світла тема (від 211→262 hue) …
-      const startHue   = 211;
-      const endHue     = 262;
-      const saturation = 50;
-      const lightness  = 40;
-
-      const currentHue = startHue + (endHue - startHue) * scrollFraction;
-      document.body.style.background =
-        `hsl(${currentHue.toFixed(1)}, ${saturation}%, ${lightness}%)`;
+      const hue = 220;
+      const sat = 30 + (0 - 30) * fraction;
+      const light = 15 + (10 - 15) * fraction;
+      document.body.style.background = `hsl(${hue}, ${sat.toFixed(1)}%, ${light.toFixed(1)}%)`;
+    } else {
+      const startHue = 211, endHue = 262;
+      const hue = startHue + (endHue - startHue) * fraction;
+      document.body.style.background = `hsl(${hue.toFixed(1)}, 50%, 40%)`;
     }
   });
 }
 
-
-
-// ========== 1. Зберігання даних у браузері ==========
 function storeUserInfo() {
-  const userAgent = navigator.userAgent;
-  const platform  = navigator.platform;
-  const language  = navigator.language || navigator.userLanguage;
-  const screenSize = `${screen.width}×${screen.height}`;
-  const timestamp = new Date().toLocaleString();
-
-  const userInfo = { userAgent, platform, language, screenSize, timestamp };
-  localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  const info = {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform,
+    language: navigator.language || navigator.userLanguage,
+    screenSize: `${screen.width}×${screen.height}`,
+    timestamp: new Date().toLocaleString()
+  };
+  localStorage.setItem('userInfo', JSON.stringify(info));
 }
 
 function displayStoredUserInfo() {
@@ -96,56 +53,50 @@ function displayStoredUserInfo() {
     footerInfo.innerHTML = '<p>Немає даних про користувача.</p>';
     return;
   }
-  const info = JSON.parse(stored);
+  const { userAgent, platform, language, screenSize, timestamp } = JSON.parse(stored);
   footerInfo.innerHTML = `
     <ul>
-      <li><strong>userAgent:</strong> ${info.userAgent}</li>
-      <li><strong>platform:</strong> ${info.platform}</li>
-      <li><strong>language:</strong> ${info.language}</li>
-      <li><strong>screenSize:</strong> ${info.screenSize}</li>
-      <li><strong>записано:</strong> ${info.timestamp}</li>
+      <li><strong>userAgent:</strong> ${userAgent}</li>
+      <li><strong>platform:</strong> ${platform}</li>
+      <li><strong>language:</strong> ${language}</li>
+      <li><strong>screenSize:</strong> ${screenSize}</li>
+      <li><strong>записано:</strong> ${timestamp}</li>
     </ul>
   `;
 }
 
-// ========== 2. Завантаження та відображення коментарів ==========
 function fetchComments() {
-  const url = `https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`;
-  fetch(url)
-    .then(response => {
-      if (!response.ok) throw new Error('Помилка мережі при завантаженні коментарів');
-      return response.json();
+  fetch(`https://jsonplaceholder.typicode.com/posts/${VARIANT_NUMBER}/comments`)
+    .then(res => {
+      if (!res.ok) throw new Error('Не вдалося завантажити коментарі');
+      return res.json();
     })
     .then(comments => {
       const list = document.getElementById('comments-list');
-      comments.forEach((comment, idx) => {
+      comments.forEach((c, i) => {
         const li = document.createElement('li');
         li.classList.add('comment-item');
-        // Відкладення анімації для кожного коментаря
-        li.style.animationDelay = `${1.2 + idx * 0.2}s`;
+        li.style.animationDelay = `${1.2 + i * 0.2}s`;
         li.innerHTML = `
-          <p><strong>${escapeHTML(comment.name)}</strong> (${escapeHTML(comment.email)})</p>
-          <p>${escapeHTML(comment.body)}</p>
+          <p><strong>${escapeHTML(c.name)}</strong> (${escapeHTML(c.email)})</p>
+          <p>${escapeHTML(c.body)}</p>
         `;
         list.appendChild(li);
       });
     })
-    .catch(err => {
-      console.error(err);
-      const list = document.getElementById('comments-list');
-      list.innerHTML = '<li>Не вдалося завантажити коментарі.</li>';
+    .catch(() => {
+      document.getElementById('comments-list').innerHTML = '<li>Не вдалося завантажити коментарі.</li>';
     });
 }
+
 function escapeHTML(str) {
-  return str.replace(/[&<>"']/g, tag => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[tag]));
+  return str.replace(/[&<>"']/g, s => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'" :'&#39;' }[s]));
 }
 
-// ========== 3. Модальне вікно з формою ==========
 function scheduleFeedbackModal() {
-  setTimeout(showFeedbackModal, 60000); // 60 секунд
+  setTimeout(showFeedbackModal, 60000);
 }
+
 function showFeedbackModal() {
   const overlay = document.getElementById('feedback-modal');
   overlay.classList.add('visible');
@@ -154,11 +105,11 @@ function showFeedbackModal() {
     if (e.target === overlay) hideFeedbackModal();
   });
 }
+
 function hideFeedbackModal() {
   document.getElementById('feedback-modal').classList.remove('visible');
 }
 
-// ========== 4. Перемикач теми ==========
 function setupThemeToggle() {
   const btn = document.getElementById('theme-toggle');
   btn.addEventListener('click', () => {
@@ -167,6 +118,7 @@ function setupThemeToggle() {
   });
   loadThemePreference();
 }
+
 function applyAutoTheme() {
   const hours = new Date().getHours();
   if (hours < 7 || hours >= 21) {
@@ -176,35 +128,28 @@ function applyAutoTheme() {
   }
   saveThemePreference();
 }
+
 function saveThemePreference() {
-  const isDark = document.body.classList.contains('dark-mode');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
+
 function loadThemePreference() {
   const pref = localStorage.getItem('theme');
-  if (pref === 'dark') {
-    document.body.classList.add('dark-mode');
-  } else if (pref === 'light') {
-    document.body.classList.remove('dark-mode');
-  }
+  if (pref === 'dark') document.body.classList.add('dark-mode');
+  if (pref === 'light') document.body.classList.remove('dark-mode');
 }
 
-// ========== 5. Кнопка «Показати/Сховати інфо» ==========
 function setupInfoToggle() {
-  const btn     = document.getElementById('toggle-info-btn');
+  const btn = document.getElementById('toggle-info-btn');
   const infoDiv = document.getElementById('local-storage-info');
-  const icon    = document.getElementById('toggle-icon');
-  const text    = document.getElementById('toggle-text');
-
-  let visible = false; // спочатку панель прихована => текст "Показати інфо"
+  const icon = document.getElementById('toggle-icon');
+  const text = document.getElementById('toggle-text');
+  let visible = false;
   text.textContent = 'Показати інфо';
 
   btn.addEventListener('click', () => {
     visible = !visible;
-
-    // перевертаємо трикутник
     btn.classList.toggle('info-open');
-
     if (visible) {
       infoDiv.classList.add('visible');
       icon.textContent = '▲';
@@ -214,57 +159,42 @@ function setupInfoToggle() {
       icon.textContent = '▼';
       text.textContent = 'Показати інфо';
     }
-
-    // якщо відкрито інфо, автоматично сховаємо мобільне меню (якщо воно було)
     document.querySelector('header').classList.remove('menu-open');
     document.getElementById('mobile-menu-btn').classList.remove('opened');
   });
 }
 
-
-// ========== 6. Кнопка «Scroll to Top» ==========
 function setupScrollTopButton() {
   const btn = document.getElementById('scroll-top-btn');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
+    btn.classList.toggle('visible', window.scrollY > 400);
   });
-
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
-// ========== 7. Гамбургер-меню (мобільний режим) ==========
 function setupMobileMenu() {
-  const header        = document.querySelector('header');
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const themeToggleBtn = document.getElementById('theme-toggle');
+  const header = document.querySelector('header');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const themeBtn = document.getElementById('theme-toggle');
 
-  // При кліку на гамбургер — додаємо/забираємо клас menu-open
-  mobileMenuBtn.addEventListener('click', () => {
-    const isOpen = header.classList.toggle('menu-open');
-    mobileMenuBtn.classList.toggle('opened');
-    // Сховаємо інфо за потреби:
+  mobileBtn.addEventListener('click', () => {
+    header.classList.toggle('menu-open');
+    mobileBtn.classList.toggle('opened');
     document.getElementById('local-storage-info').classList.remove('visible');
     document.getElementById('toggle-info-btn').classList.remove('info-open');
   });
 
-  // Якщо користувач перемикає тему — згортаємо меню
-  themeToggleBtn.addEventListener('click', () => {
+  themeBtn.addEventListener('click', () => {
     header.classList.remove('menu-open');
-    mobileMenuBtn.classList.remove('opened');
+    mobileBtn.classList.remove('opened');
   });
 
-  // Якщо клік по пункту меню — ховаємо навігацію
-  const navLinks = header.querySelectorAll('nav a');
-  navLinks.forEach(link => {
+  document.querySelectorAll('header nav a').forEach(link => {
     link.addEventListener('click', () => {
       header.classList.remove('menu-open');
-      mobileMenuBtn.classList.remove('opened');
+      mobileBtn.classList.remove('opened');
     });
   });
 }
